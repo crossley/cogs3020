@@ -24,11 +24,10 @@ fontsize: 14pt
 ##### [Lecture 2-2: Hodgkin–Huxley](lecture_3.html)
 
 ## Modelling postsynaptic potentials
-##### [Lecture 3-1: postsynaptic potentials](lecture_4.html)
+##### [Lecture 3: postsynaptic potentials](lecture_4.html)
 
 ## Building spiking networks
-##### Lecture 4: Chaining neurons together
-<!-- ##### [Lecture 4: Chaining neurons together](lecture_5.html) -->
+##### [Lecture 4: Spiking networks](lecture_5.html)
 
 ## Reinforcement Learning (RL)
 ##### Lecture 5: Model-free RL models of stimulus-response learning
