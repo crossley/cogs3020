@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # TODO: Add the indirect pathway
 
 tau = 0.1
-T = 100
+T = 300
 t = np.arange(0, T, tau)
 n = t.shape[0]
 
@@ -15,7 +15,7 @@ psp_decay = 10
 # allocate memory for network elements
 g_in = np.zeros(n)
 spike_in = np.zeros(n)
-spike_in[200:800:20] = 1
+spike_in[1000:1500:20] = 1
 
 w_in_spn = 0.5
 w_spn_gpi = 2.0

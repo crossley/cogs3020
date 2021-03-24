@@ -1,0 +1,497 @@
+---
+title: "Lecture 6 - Reinforcement Learning"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+library(reticulate)
+use_python('/Users/mq20185996/miniconda3/bin/python')
+```
+
+
+## Reinforcement learning framework
+
+* An agent can occupy a discrete set of states $S$ and can
+take a discrete set of actions $A$ from each state as determined 
+by some policy $\pi$.
+
+$$
+S = \{s_1, s_2, \ldots, s_n\} \\
+A = \{a_1, a_2, \ldots, a_n\} \\
+\pi \rightarrow P(a_i | s_j)
+$$
+
+* The actions $a_i$ taken by the agent determine the
+probability that the state will transition from $s_i$ to
+$s_j$, and also determine the probability of current and
+future reward (because rewards are causally determined by
+states).
+  
+* The goal of the agent is to learn to take actions that
+maximize current and future reward. That is, the RL agent
+tries to determine the state-value function $V_{\pi}(s)$ of
+a given policy $\pi$ as a function of each state $s$.
+
+$$
+\begin{align}
+  V_{\pi}(s) &= \operatorname{E}[R | \pi, s] \nonumber \\ 
+             &= \operatorname{E} \left[ \sum_{t=0}^{\infty} \gamma^t r_t | \pi, s \right].
+\end{align}
+$$
+
+* Here, $\gamma$ is a temporal discounting factor that
+allows the agent to care more about near rewards than about
+distant future rewards.
+
+* The fundamental goal of RL is to estimate $V_{\pi}(s)$
+using nothing more than the experience an agent gains while
+navigating its environment. The specific way in which an RL
+algorithm does this varies greatly from one algorithm to the
+next, and is still very much an active area of research.
+
+
+## Estimating the state-value function
+
+* RL aims to learn state-value function through experience.
+
+* The general structure is to give the agent many trials of
+experience, where on each trial the agent visits some
+sequence of states by taking some sequence of actions.
+
+* A trial of experience comes to an end whenever a terminal
+state is visited, but in principle, goes on forever until
+such a state is experienced.
+
+* The layout of an RL program will generally look something
+like the following:
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+n_trials = 10
+
+# specify the set of states
+states = np.array([1, 2, 3])
+n_states = states.shape[0]
+
+# initialise value estimate
+v = np.zeros((n_trials, n_states))
+
+for trial in range(n_trials):
+  
+  terminate = False
+  while not terminate:
+    # select action
+    
+    # transition to new state
+    
+    # possibly recieve reward
+    
+    # update value estimate
+    
+    # check if current state is terminal
+    # if s == 3:
+    #   terminate = True
+    
+    # for now just set to True to avoid infinite while loop
+    terminate = True
+```
+
+## Temporal difference (TD) learning
+
+* The term *temporal* in TD learning refers to the
+difference between successive visits to a particular state
+(across trials), not *necessarily* across different times
+within a trial.
+
+* TD learning simply tries to iteratively update its
+estimate of a states value by directly experiencing them,
+comparing what was experienced to what was expected, and
+updating its expectation to more closely match recent
+experience.
+
+## TD RL in a simple 2-arm bandit task
+
+* This is a very simple scenario in which the agent begins
+in state $s_0$ and can select only one of two actions.
+Action $a_1$ selects the slot machine on the left and leads
+to state $s_l$, and action $a_2$ selects the slot machine on
+the right and leads to state $s_r$. Reward is delivered in
+state $s_l$ and $s_r$ with different probability, and both
+are terminal states.
+
+* Let $n$ index the current trial and $\hat{V}_{n}(s)$ be
+the state-value function estimate on trial $n$ of state
+$s\in\{s_l,s_r\}$. In the 2-armed bandit task descirbed
+above, TD iteratively updates its estimate of
+$\hat{V}_{n}(s)$ according to the following:
+
+$$
+\begin{equation}
+\hat{V}_{n}(s) = \hat{V}_{n-1}(s) + \alpha (r_{n} - \hat{V}_{n-1}(s)). 
+\end{equation}
+$$
+
+* The rightmost term $r_{n} - \hat{V}_{n-1}(s)$ is called
+the reward prediction error (RPE).
+
+* Conceptually, RPE is simply the difference between the
+obtained and expected reward.
+
+* it is easy to see that the goal of any RL agent is to
+learn to reduce RPE as much as possible.
+
+* RPE is often notated as $\delta$, so we can write
+$\delta_{n}=r_{n}-\hat{V}_{n-1}(s)$.
+
+* You can also write the value update equation in the
+following form:
+
+$$
+\begin{equation}
+\hat{V}_{n}(s) =  (1-\alpha) \hat{V}_{n-1}(s) +  \alpha r_{n}. 
+\end{equation}
+$$
+
+* In this form it may be easier to see that the update to
+our estimate of the state-value function is a weighted
+average of whatever it was on the previous trial with
+whatever current reward was experienced.
+
+* In code, a TD agent performing a 2-armed bandit task looks
+as follows:
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+n_trials = 1000
+
+v_init = 0.5
+p_reward_1 = 7
+p_reward_2 = 6
+alpha = 0.01
+epsilon = 0.2
+
+v = np.zeros((2, n_trials))
+v[:, 0] = v_init
+
+for i in range(0, n_trials - 1):
+
+    # # action selection - greedy epsilon
+    # if np.random.uniform() < epsilon:
+    #     a = np.round(np.random.uniform())
+    # else:
+    #     a = np.argmax(v[:, i])
+    
+    # action selection - softmax
+    sm = np.exp(v[:, i]) / np.sum(np.exp(v[:, i]))
+    if np.random.uniform() < sm[0]:
+        # reward
+        r = np.random.normal(p_reward_1, 2)
+
+        # reward prediction error
+        delta = r - v[0, i]
+
+        # value update
+        v[0, i + 1] = v[0, i] + alpha * delta
+        v[1, i + 1] = v[1, i]
+
+    else:
+        # reward
+        r = np.random.normal(p_reward_2, 2)
+
+        # reward prediction error
+        delta = r - v[1, i]
+
+        # value update
+        v[1, i + 1] = v[1, i] + alpha * delta
+        v[0, i + 1] = v[0, i]
+
+fig, ax = plt.subplots(1, 1, squeeze=False)
+ax[0, 0].plot(v[0, :], label='value 1')
+ax[0, 0].plot(v[1, :], label='value 2')
+plt.legend()
+plt.show()
+```
+
+### TD RL more generally
+
+* Let $n$ index the current trial, $s'$ be the state just
+arrived in coming from state $s$, and $\hat{V}_{n}(s)$ be
+the state-value function estimate on trial $n$ of state $s$.
+
+* TD learning updates the state-value function across trials
+as follows:
+
+$$
+\begin{equation}
+\hat{V}_{n}(s) = \hat{V}_{n-1}(s) + 
+\alpha (r_{n} + \gamma \hat{V}_{n-1}(s') - \hat{V}_{n-1}(s)). 
+\end{equation}
+$$
+
+* The term $r_{n}$ is the reward that was delivered upon
+arrival to the current state $s'$.
+
+* $\hat{V}_{n-1}(s')$ is the reward that is expected to
+arrive in *future* states visited beyond $s'$. This value
+has to come from the the state-value function estimate in
+the previous trial $n-1$ because the agent has not yet
+experienced states beyond $s'$ in the current trial.
+
+* $\alpha$ is called the learning rate and $\gamma$ is the
+temporal discounting parameter.
+
+* Notice that you can write the value update as follows:
+
+$$
+\begin{equation}
+\hat{V}_{n}(s) = 
+(1-\alpha) (\hat{V}_{n-1}(s)) + 
+\alpha (r_{n} + \gamma \hat{V}_{n-1}(s')). 
+\end{equation}
+$$
+
+* In this form it may be easier to see that the update to
+our estimate of the state-value function is a weighted
+average of whatever it was on the previous trial with
+whatever current reward was experienced and future reward is
+expected from the newly arrived in state $s'$.
+
+
+## TD RL in a sequential decision making task
+
+* Consider a task in which the agent must first choose
+between two bandits, but then, rather than being transported
+to a terminal state as in the simple 2-arm bandit task, is
+instead transported to one of two new states in which the
+agent must choose between two new bandits. Reward is again
+given only in the terminal states. The possible state
+transitions are given by the following:
+
+$$
+s_{l} \rightarrow s \in \{s_{ll}, s_{lr}\} \\
+s_{r} \rightarrow s \in \{s_{rl}, s_{rr}\}
+$$
+
+* In code, a TD agent performing a sequential decision
+making task looks as follows:
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+n_trials = 1000
+
+v_init = 0.5
+
+p_reward = [0.0, 0.0, 0.0, 50, 100, 25, 150]
+
+alpha = 0.01
+gamma = 0.1
+epsilon = 0.2
+
+v = np.zeros((7, n_trials))
+v[:, 0] = v_init
+
+
+for i in range(0, n_trials - 1):
+
+    s_trace = np.zeros(3)
+
+    # step 0
+    s = 0
+    act = [1, 2]
+    sm = np.exp(v[act, i]) / np.sum(np.exp(v[act, i]))
+    a = (np.random.uniform() < sm[0]).astype(int)
+    sprime = act[a]
+    r = 0
+    v[s, i + 1] = v[s, i] + alpha * (r + gamma * v[sprime, i] - v[s, i])
+    s_trace[1] = sprime
+
+    # step 1
+    s = sprime
+    act = [3, 4] if s == 1 else [5, 6]
+    sm = np.exp(v[act, i]) / np.sum(np.exp(v[act, i]))
+    a = (np.random.uniform() < sm[0]).astype(int)
+    sprime = act[a]
+    r = 0
+    v[s, i + 1] = v[s, i] + alpha * (r + gamma * v[sprime, i] - v[s, i])
+    s_trace[2] = sprime
+
+    # step 2
+    s = sprime
+    r = np.random.normal(p_reward[sprime], 2)
+    v[s, i + 1] = v[s, i] + alpha * (r - v[s, i])
+
+    nots = np.setdiff1d(np.arange(0, 7, 1), s_trace)
+    v[nots, i + 1] = v[nots, i]
+
+fig, ax = plt.subplots(1, 3, squeeze=False)
+ax[0, 0].plot(v[0, :], label='value 0')
+
+ax[0, 1].plot(v[1, :], label='value 1')
+ax[0, 1].plot(v[2, :], label='value 2')
+
+ax[0, 2].plot(v[3, :], label='value 3')
+ax[0, 2].plot(v[4, :], label='value 4')
+ax[0, 2].plot(v[5, :], label='value 5')
+ax[0, 2].plot(v[6, :], label='value 6')
+
+ax[0, 0].legend()
+ax[0, 1].legend()
+ax[0, 2].legend()
+plt.show()
+```
+
+<!-- $$ -->
+<!-- \begin{equation} -->
+<!-- V_n(t)=\operatorname{E}[ R_n(t) ]. -->
+<!-- \end{equation} -->
+<!-- $$ -->
+
+<!-- $$ -->
+<!-- \begin{equation} -->
+<!-- \hat{V}_n(t)=\frac{1}{n} \sum_{j=1}^n R_j(t). -->
+<!-- \end{equation} -->
+<!-- $$ -->
+
+<!-- $$ -->
+<!-- \begin{equation} -->
+<!-- \hat{V}_n(t) = \hat{V}_{n-1}(t) + \alpha [R_n(t) - \hat{V}_{n-1}(t)].  -->
+<!-- \label{ISMRL1} -->
+<!-- \end{equation} -->
+<!-- $$ -->
+
+<!-- The problem with this estimate is that $R_n(t)$ includes the -->
+<!-- immediate reward $r_n(t)$, plus all future rewards that will -->
+<!-- be obtained on trial $n$ -- that is, -->
+
+<!-- $$ -->
+<!-- \begin{align} -->
+<!-- R_n(t) &= r_n(t) + \sum_{i=t+1}^T \gamma^{i-t} r_n(i) \nonumber \\ -->
+<!-- &= r_n(t) + \gamma \sum_{i=t+1}^T \gamma^{i-(t+1)} r_n(i) -->
+<!-- \end{align} -->
+<!-- $$ -->
+
+<!-- and unfortunately, all reward-related terms on the right -->
+<!-- except $r_n(t)$ are unknowable since they occur in the -->
+<!-- future. Temporal-difference learning estimates the -->
+<!-- unknowable part -- that is, the expression defined by the -->
+<!-- summation sign -- by using the iterative sample mean of all -->
+<!-- rewards that occurred after time $t$ on previous trials -->
+<!-- [i.e., via $\hat{V}_{n-1}(t+1)$]. This results in the -->
+<!-- following estimate: -->
+
+<!-- $$ -->
+<!-- \begin{equation} -->
+<!-- \hat{R}_n(t) = r_n(t) + \gamma \hat{V}_{n-1}(t+1). -->
+<!-- \end{equation} -->
+<!-- $$ -->
+
+<!-- Substituting this estimate into Eq. ISM1 for $R_n(t)$ -->
+<!-- produces the final form of temporal-difference learning: -->
+
+<!-- $$ -->
+<!-- \begin{equation} -->
+<!-- \hat{V}_n(t) = \hat{V}_{n-1}(t) + \alpha [r_n(t) + \gamma \hat{V}_{n-1}(t+1) - \hat{V}_{n-1}(t)]. -->
+<!-- \label{TD} -->
+<!-- \end{equation} -->
+<!-- $$ -->
+
+<!-- Note that, despite initial appearances, the expression in -->
+<!-- square brackets equals the prediction error, or more -->
+<!-- specifically, the RPE, just as in Eq. ISM. The first term in -->
+<!-- the square brackets is the immediately obtained reward and -->
+<!-- the second term is the best guess of the (discounted) value -->
+<!-- of all future rewards expected on trial $n$. The sum of the -->
+<!-- first two terms is therefore the agent's estimate of the -->
+<!-- total obtained rewards on trial $n$ given that we are $t$ -->
+<!-- time units into the trial. The last term is the predicted -->
+<!-- value of this quantity that was made before the trial began. -->
+<!-- Therefore, the sum of the first two terms represents -->
+<!-- obtained reward, whereas the last term represents predicted -->
+<!-- reward. -->
+
+<!-- As an application of temporal-difference learning, consider -->
+<!-- a simple classical-conditioning task in which the same CS -->
+<!-- (e.g., a light or tone) is followed $T$ time steps later by -->
+<!-- a reward. On the first presentation of the CS, the -->
+<!-- subsequent reward is unexpected, but as the CS-reward -->
+<!-- pairing is repeated, the agent will eventually learn that -->
+<!-- the CS is paired with future reward. The standard -->
+<!-- temporal-difference learning application to this task -->
+<!-- assumes that initially, all states have zero value [i.e., -->
+<!-- $V_0(t) = 0$, for all $t$] because the CS has never before -->
+<!-- been paired with reward. On trial 1, the CS is presented and -->
+<!-- then the agent unexpectedly receives a reward at time $T$. -->
+<!-- Suppose the value of this reward is $r$. Then -->
+<!-- temporal-difference learning predicts that -->
+
+<!-- $$ -->
+<!-- \begin{equation} -->
+<!-- \hat{V}_1(T) = \hat{V}_0(T) + \alpha [r_1(T) + \gamma \hat{V}_0(T+1) - \hat{V}_0(T)]. -->
+<!-- \end{equation} -->
+<!-- $$ -->
+
+<!-- Note that, by our assumptions about initial conditions, all -->
+<!-- $V_0$ terms equal 0. However, $r_1(T)=r$ because the agent -->
+<!-- receives a reward on each trial at time $T$. Therefore, -->
+
+<!-- \begin{equation} -->
+<!-- \hat{V}_1(T) = \alpha r. -->
+<!-- \end{equation} -->
+
+<!-- Now consider the value that temporal-difference learning -->
+<!-- assigns to the state that is one-time unit earlier than -->
+<!-- reward delivery on trial 2: -->
+
+<!-- \begin{equation} -->
+<!-- \hat{V}_2(T-1) = \hat{V}_1(T-1) + \alpha [r_2(T-1) + \gamma \hat{V}_1(T) - \hat{V}_1(T-1)]. -->
+<!-- \end{equation} -->
+
+<!-- Note that $\hat{V}_1(T-1)=0$ because at time $T-1$ of trial -->
+<!-- 1 the agent has not yet received any rewards. Furthermore -->
+<!-- $r_2(T-1)=0$ because rewards are delivered at time $T$, not -->
+<!-- at time $T-1$. However, as we saw, $\hat{V}_1(T)=\alpha r$. -->
+<!-- Therefore, -->
+
+<!-- \begin{equation} -->
+<!-- \hat{V}_2(T-1) = \alpha^2 \gamma r. -->
+<!-- \end{equation} -->
+
+<!-- In other words, the RPE that occurred at time $T$ on trial 1 -->
+<!-- has propagated back on trial 2 to the immediately preceding -->
+<!-- state (i.e., $T-1$). Similarly, on trial 3, the positive -->
+<!-- value associated with state $T-1$ will propagate back to -->
+<!-- state $T-2$. In this way, the value associated with earlier -->
+<!-- and earlier states will increase. This propagation will -->
+<!-- continue until it eventually reaches the time of cue -->
+<!-- presentation -- that is, until $V_n(0) > 0$, for some value -->
+<!-- of $n$. It will not propagate to earlier times than this -->
+<!-- however, so long as cue presentation times are -->
+<!-- unpredictable. -->
+
+<!-- Temporal-difference learning is popular, in part because it -->
+<!-- shares some properties with the firing properties of -->
+<!-- dopamine (DA) neurons. In particular, in this same -->
+<!-- classical-conditioning experiment, DA neurons will -->
+<!-- eventually begin to fire to any cue that predicts a future -->
+<!-- reward. We will consider temporal-difference learning as a -->
+<!-- model of DA neuron firing in more detail in a later -->
+<!-- section. -->
