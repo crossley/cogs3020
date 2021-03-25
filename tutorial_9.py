@@ -22,5 +22,5 @@ for n in range(1, n_trials):
 fig, ax = plt.subplots(1, 1, squeeze=False)
 ax[0, 0].imshow(v, aspect='auto')
 ax[0, 0].set_xlabel('trial')
-ax[0, 0].set_ylabel('step')
+ax[0, 0].set_ylabel('time step (state)')
 plt.show()

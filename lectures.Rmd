@@ -30,7 +30,7 @@ fontsize: 14pt
 ##### [Lecture 4: Spiking networks](lecture_5.html)
 
 ## Reinforcement Learning (RL)
-##### Lecture 5: Model-free RL models of stimulus-response learning
+##### [Lecture 5: Model-free RL models of stimulus-response learning](lecture_6.html)
 ##### Lecture 6: Model-based RL models of goal-directed learning
 ##### Lecture 7: Temporal-difference RL model of dopamine
 

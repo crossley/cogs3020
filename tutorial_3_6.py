@@ -59,7 +59,7 @@ w[2, 4] = -1 * 100
 w[4, 3] = -1 * 25
 
 # hyperdirect pathway
-w[0, 6] = 1 * 50
+w[0, 6] = 1 * 50 * 0
 w[6, 3] = 1
 
 # stn-gpe feedback
