@@ -31,7 +31,7 @@ fontsize: 14pt
 
 ## Reinforcement Learning (RL)
 ##### [Lecture 6: Temporal-difference RL](lecture_6.html)
-##### Lecture 7:  Q-learning
+##### [Lecture 7: Q-learning](lecture_7.html)
 ##### Lecture 8: Model-based RL
 
 ## Linear dynamical systems
