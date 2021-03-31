@@ -24,3 +24,59 @@ ax[0, 0].imshow(v, aspect='auto')
 ax[0, 0].set_xlabel('trial')
 ax[0, 0].set_ylabel('time step (state)')
 plt.show()
+
+
+# void update_TD_zero(int tick)
+# {
+#     int t = tick;
+
+#     delta = r[t] + gamma_*v[t]*I[t] - v[t-1]*I[t-1]; // "I" is a simple indicator function
+#     z[t] = delta;
+
+#     v[t-1] += alpha * delta;
+
+#     if(t<num_steps-spike_length_TD)
+#     {
+#         for(int j=0; j<spike_length_TD; j++)
+#         {
+#             TD_output[t+j] += z[t]*spike[j];
+#         }
+#     }else
+#     {
+#         for(int j=0; j<num_steps-t; j++)
+#         {
+#             TD_output[t+j] += z[t]*spike[j];
+#         }
+#     }
+# }
+
+# void update_TD_lambda(int tick)
+# {
+#     int t = tick;
+
+#     delta = r[t] + gamma_*v[t]*I[t] - v[t-1]*I[t-1]; // "I" is a simple indicator function
+#     z[t] = delta;
+
+#     e[t-1] = I[t] * (e[t-1] + 1);
+
+#     for(int k=0; k<num_steps; k++)
+#     {
+#         v[k] += alpha * delta * e[k];
+
+#         e[k] = gamma_ * lambda * e[k];
+#     }
+
+#     if(t<num_steps-spike_length_TD)
+#     {
+#         for(int j=0; j<spike_length_TD; j++)
+#         {
+#             TD_output[t+j] += z[t]*spike_TD[j];
+#         }
+#     }else
+#     {
+#         for(int j=0; j<num_steps-t; j++)
+#         {
+#             TD_output[t+j] += z[t]*spike_TD[j];
+#         }
+#     }
+# }
