@@ -32,7 +32,7 @@ fontsize: 14pt
 ## Reinforcement Learning (RL)
 ##### [Lecture 6: Temporal-difference RL](lecture_6.html)
 ##### [Lecture 7: Q-learning](lecture_7.html)
-##### Lecture 8: Model-based RL
+##### [Lecture 8: Learning in the BG](lecture_8.html)
 
 ## Linear dynamical systems
 ##### Lecture 9: State-space models of sensorimotor learning
