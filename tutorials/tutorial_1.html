@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Author: Matthew J. Crossley" />
 
 
-<title>Homework</title>
+<title>Tutorial 1</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -303,80 +304,6 @@ padding: 0;
 </style>
 
 
-<style type="text/css">
-.dropdown-submenu {
-position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-top: 0;
-left: 100%;
-margin-top: -6px;
-margin-left: -1px;
-border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-display: block;
-}
-.dropdown-submenu>a:after {
-display: block;
-content: " ";
-float: right;
-width: 0;
-height: 0;
-border-color: transparent;
-border-style: solid;
-border-width: 5px 0 5px 5px;
-border-left-color: #cccccc;
-margin-top: 5px;
-margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-left: -100%;
-margin-left: 10px;
-border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark the anchor link active (and if it's in a dropdown, also mark that active)
-  var dropdown = menuAnchor.closest('li.dropdown');
-  if (window.bootstrap) { // Bootstrap 4+
-    menuAnchor.addClass('active');
-    dropdown.find('> .dropdown-toggle').addClass('active');
-  } else { // Bootstrap 3
-    menuAnchor.parent().addClass('active');
-    dropdown.addClass('active');
-  }
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
-  }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
 
 <!-- tabsets -->
 
@@ -436,47 +363,185 @@ display: none;
 
 
 
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">COGS3020</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="lectures.html">Lectures</a>
-</li>
-<li>
-  <a href="tutorials.html">Tutorials</a>
-</li>
-<li>
-  <a href="homework.html">Homework</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
-
 <div id="header">
 
 
 
-<h1 class="title toc-ignore">Homework</h1>
+<h1 class="title toc-ignore">Tutorial 1</h1>
+<h4 class="author">Author: Matthew J. Crossley</h4>
+<h4 class="date">Last update: 19 February, 2024</h4>
 
 </div>
 
 
+<div id="learning-objectives" class="section level2">
+<h2>Learning objectives</h2>
 <ul>
-<li>Coming soon.</li>
+<li>Be able to do basic <code>python</code> programming.</li>
+<li>Create and use variables of basic data types (<code>float</code>,
+<code>int</code>, <code>str</code>, <code>bool</code>).</li>
+<li>Create and use basic container data types (<code>list</code>,
+<code>tuple</code>, <code>set</code>, <code>dict</code>).</li>
+<li>Create and understand <code>for</code> and <code>while</code>
+loops.</li>
+<li>Create and understand conditional flow using <code>if</code>,
+<code>elif</code>, <code>else</code>.</li>
+<li>Create and understand how to define and use your own custom
+functions.</li>
 </ul>
+</div>
+<div id="practice-problems" class="section level2">
+<h2>Practice problems</h2>
+<ul>
+<li>It’s a good idea to work through these on your own, but if you get
+very stuck, solutions can be found <a href="tutorial_1_solutions.html">here</a></li>
+</ul>
+<pre class="python"><code>import numpy as np
+import matplotlib.pyplot as plt</code></pre>
+<ul>
+<li><p>Create a <code>float</code> variable named <code>ans_1a</code>
+that contains the value <code>3.14159</code>.</p></li>
+<li><p>Create an <code>int</code> variable named <code>ans_1b</code>
+that contains the value <code>3</code>.</p></li>
+<li><p>Create a <code>bool</code> variable named <code>ans_1c</code>
+that contains the value <code>True</code>.</p></li>
+<li><p>Create a <code>str</code> variable named <code>ans_1d</code> that
+contains the value <code>hello world</code>.</p></li>
+<li><p>Create a <code>list</code> named <code>ans_1e</code> that
+contains the elements <code>1</code>, <code>&#39;a&#39;</code>, and
+<code>True</code> in that order.</p></li>
+<li><p>If possible, append the value <code>10</code> to the
+<code>list</code> you created in the previous problem and save the
+result in a variable named <code>ans_1f</code>.If not possible, write
+<code>ans_1f = &#39;can&#39;t because lists are immutable&#39;</code>. Be sure not
+to modify the <code>ans_1e</code> variable while doing this.</p></li>
+<li><p>Create <code>tuple</code> named <code>ans_1g</code> that contains
+the elements <code>1</code>, <code>&#39;a&#39;</code>, and <code>True</code> in
+that order.</p></li>
+<li><p>If possible, append the value <code>10</code> to the
+<code>tuple</code> you created in the previous problem and save the
+result in a variable named <code>ans_1h</code>. If not possible, write
+<code>ans_1h = &#39;can&#39;t because tuples are immutable&#39;</code>. Be sure not
+to modify the <code>ans_1g</code> variable while doing this.</p></li>
+<li><p>Create a <code>dict</code> variable named <code>ans_1i</code>
+with one key named <code>A</code> that contains the list
+<code>[1, 2, 3]</code> and another key named <code>B</code> that
+contains the tuple <code>(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;)</code>.</p></li>
+</ul>
+<ol style="list-style-type: lower-alpha">
+<li>Consider the following code chunk:</li>
+</ol>
+<pre class="python"><code>x = 5
+for i in [1, 3, 5]:
+  x = i + 2</code></pre>
+<ul>
+<li>What is the value of <code>x</code> after the loop has finished
+executing?</li>
+<li>What is the value of <code>i</code> after the loop has finished
+executing?</li>
+<li>Modify the code chunk such that the final value of <code>x</code> is
+10 and <code>i</code> is 20.</li>
+</ul>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Consider the following code chunk:</li>
+</ol>
+<pre class="python"><code>x = 10
+y = [1, 2, 3]
+while x &gt; 5:
+  y.append(x)
+  x = x - 1</code></pre>
+<ul>
+<li>How many elements does <code>y</code> contain after the loop has
+finished?</li>
+<li>What is the value of the final element in <code>y</code> and can you
+figure this out without executing the code?</li>
+</ul>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Consider the following code chunk:</li>
+</ol>
+<pre class="r"><code>if x &gt; y: 
+  z = 10
+else:
+  z = 2</code></pre>
+<ul>
+<li>What is the value of <code>z</code> if <code>x = 10</code> and
+<code>y = -10</code></li>
+<li>What is the value of <code>z</code> if <code>x = -5</code> and
+<code>y = 5</code></li>
+<li>What is the value of <code>z</code> if <code>x = 0</code> and
+<code>y = 0</code></li>
+</ul>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Consider the following code chunk:</li>
+</ol>
+<pre class="python"><code>for i in range(10):
+  x = i * 2
+  if x &gt; 5:
+    break</code></pre>
+<ul>
+<li>How many times will this loop run?</li>
+<li>What is the value of <code>i</code> and <code>x</code> when the loop
+stops?</li>
+</ul>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>consider the following code chunk:</li>
+</ol>
+<pre class="python"><code>if x == y:
+  z = 1
+elif x &gt; y:
+  z = 2
+elif x &lt; y:
+  z = 3</code></pre>
+<ul>
+<li>What is the value of <code>z</code> if <code>x = 10</code> and
+<code>y = -10</code></li>
+<li>What is the value of <code>z</code> if <code>x = -5</code> and
+<code>y = 5</code></li>
+<li>What is the value of <code>z</code> if <code>x = 0</code> and
+<code>y = 0</code></li>
+</ul>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Consider the following code chunk:</li>
+</ol>
+<pre class="python"><code>def f(x):
+  y = x**2
+  return y
+
+z = f(3)</code></pre>
+<ul>
+<li>What are the values of <code>x</code>, <code>y</code> and
+<code>z</code>?</li>
+</ul>
+<ol start="7" style="list-style-type: lower-alpha">
+<li>Consider the following code chunk:</li>
+</ol>
+<pre class="python"><code>def f(x):
+  y = x**2
+  return y
+
+def g(x):
+  y = x - 2
+  return y
+
+z = f(g(4))</code></pre>
+<ul>
+<li>What are the values of <code>x</code>, <code>y</code> and
+<code>z</code>?</li>
+</ul>
+<ol start="8" style="list-style-type: lower-alpha">
+<li>Consider the following code chunk:</li>
+</ol>
+<pre class="python"><code>def f(x, y, z):
+  res = x + y - z
+  return res</code></pre>
+<ul>
+<li>Is <code>f(2, 1, -4)</code> a valid way to call the function
+<code>f</code>?</li>
+<li>Is <code>f(x=2, 1, -4)</code> a valid way to call the function
+<code>f</code>?</li>
+<li>What is the wisest way to call the function <code>f</code>?</li>
+</ul>
+</div>
 
 
 

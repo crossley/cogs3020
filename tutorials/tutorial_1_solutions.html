@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Author: Matthew J. Crossley" />
 
 
-<title>Homework</title>
+<title>Tutorial 1 Solutions</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -303,80 +304,6 @@ padding: 0;
 </style>
 
 
-<style type="text/css">
-.dropdown-submenu {
-position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-top: 0;
-left: 100%;
-margin-top: -6px;
-margin-left: -1px;
-border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-display: block;
-}
-.dropdown-submenu>a:after {
-display: block;
-content: " ";
-float: right;
-width: 0;
-height: 0;
-border-color: transparent;
-border-style: solid;
-border-width: 5px 0 5px 5px;
-border-left-color: #cccccc;
-margin-top: 5px;
-margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-left: -100%;
-margin-left: 10px;
-border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark the anchor link active (and if it's in a dropdown, also mark that active)
-  var dropdown = menuAnchor.closest('li.dropdown');
-  if (window.bootstrap) { // Bootstrap 4+
-    menuAnchor.addClass('active');
-    dropdown.find('> .dropdown-toggle').addClass('active');
-  } else { // Bootstrap 3
-    menuAnchor.parent().addClass('active');
-    dropdown.addClass('active');
-  }
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
-  }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
 
 <!-- tabsets -->
 
@@ -436,47 +363,80 @@ display: none;
 
 
 
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">COGS3020</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="lectures.html">Lectures</a>
-</li>
-<li>
-  <a href="tutorials.html">Tutorials</a>
-</li>
-<li>
-  <a href="homework.html">Homework</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
-
 <div id="header">
 
 
 
-<h1 class="title toc-ignore">Homework</h1>
+<h1 class="title toc-ignore">Tutorial 1 Solutions</h1>
+<h4 class="author">Author: Matthew J. Crossley</h4>
+<h4 class="date">Last update: 19 February, 2024</h4>
 
 </div>
 
 
-<ul>
-<li>Coming soon.</li>
-</ul>
+<pre class="python"><code>import numpy as np
+import matplotlib.pyplot as plt
+
+# 1.
+ans_1a = 3.14159
+ans_1b = 3
+ans_1c = True
+ans_1d = &#39;hello world&#39;
+ans_1e = [1, &#39;a&#39;, True]
+ans_1f = list(ans_1e)
+ans_1f.append(10)
+ans_1e = (1, &#39;a&#39;, True)
+ans_1h = &quot;can&#39;t because tuples are immutable&quot;
+ans_1i = {&#39;A&#39;: [1, 2, 3], &#39;B&#39;: (&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;)}
+
+# NOTE: For the most part these solutions aren&#39;t useful
+# because you can just copy and run the code yourself to
+# check your work. Nevertheless, here they are:
+
+# a: 
+# x=7, 
+# i=5
+# x=5
+# for i in [1, 3, 20]:
+#   x = i / 2
+  
+# b 
+# len(y) = 8
+# y[-1]=6
+
+# c
+# x = 10 and y = -10 --&gt; z = 10
+# x = -5 and y = 5 --&gt; z = 2
+# x = 0 and y = 0 --&gt; z = 2
+
+# d
+# 4 times
+# i = 3
+# x = 6
+
+# e
+# x = 10 and y = -10 --&gt; z=2
+# x = -5 and y = 5 --&gt; z=3
+# x = 0 and y = 0 --&gt; z=1
+
+# f
+# inside the function, `x` is 3, `y` is 9, and `z` is
+# undefined.
+#
+# outside the function, `x` and `y` are not defined, and `z`
+# is  9.
+
+# g
+# outside the functions, `x` and `y` are undefined, and `z`
+# is 4
+#
+# inside `g`, `x` is 4, and `y` is 2
+# inside `f`, `x` is 2, and `y` is 4
+
+# h
+# f(2, 1, -4) is valid
+# f(x=2, 1, -4) throws an error / is invalid
+# the wisest way is to name all arguments: f(x=2, y=1, z=-4)</code></pre>
 
 
 

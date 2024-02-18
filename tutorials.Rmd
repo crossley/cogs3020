@@ -9,4 +9,5 @@ fontsize: 14pt
 ---
 
 - Week 1
-  - Special guest meet and greet
+  - Comp Neuro club introduction / meet and greet
+  - [Tutorial 1 worksheet](tutorials/tutorial_1.html)
