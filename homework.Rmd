@@ -1,0 +1,11 @@
+---
+title: "Homework"
+description: Computational Neuroscience
+output:
+  html_document:
+    toc: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+- Coming soon.

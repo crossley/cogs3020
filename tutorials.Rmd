@@ -1,0 +1,12 @@
+---
+title: "Tutorials"
+description: Computational Neuroscience
+output:
+  html_document:
+    toc: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+- Week 1
+  - Special guest meet and greet
