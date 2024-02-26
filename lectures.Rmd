@@ -9,10 +9,19 @@ fontsize: 14pt
 ---
 
 - Week 1
-  - [Variable Assignment and Data Types in Python](lectures/week_1/lecture_1.html)
-  - [Container Variable Types in Python and Accessing Elements](lectures/week_1/lecture_2.html)
-  - [Creating and Calling Functions in Python](lectures/week_1/lecture_3.html)
-  - [Type Coercion in Python](lectures/week_1/lecture_4.html)
-  - [Loops and Conditional Flow in Python](lectures/week_1/lecture_5.html)
-  - [Getting Help with Python Programming](lectures/week_1/lecture_6.html)
-  - [Creating a Minimal Reproducible Example (MRE)](lectures/week_1/lecture_7.html)
+    - [Variable Assignment and Data Types in Python](lectures/week_1/lecture_1.html)
+    - [Container Variable Types in Python and Accessing Elements](lectures/week_1/lecture_2.html)
+    - [Creating and Calling Functions in Python](lectures/week_1/lecture_3.html)
+    - [Type Coercion in Python](lectures/week_1/lecture_4.html)
+    - [Loops and Conditional Flow in Python](lectures/week_1/lecture_5.html)
+    - [Getting Help with Python Programming](lectures/week_1/lecture_6.html)
+    - [Creating a Minimal Reproducible Example (MRE)](lectures/week_1/lecture_7.html)
+
+- Week 2
+    - [NumPy Array Basics](lectures/week_2/lecture_array_basics.html)
+    - [Creating Numpy Arrays](lectures/week_2/lecture_creating_arrays.html)
+    - [Indexing and Slicing in NumPy](lectures/week_2/lecture_indexing_slicing.html)
+    - [Element-wise vs Aggregate Operations in NumPy](lectures/week_2/lecture_element_vs_aggregate.html)
+    - [Broadcasting in NumPy](lectures/week_2/lecture_broadcasting.html)
+    - [Reshaping and Transposing Arrays](lectures/week_2/lecture_reshape_transpose.html)
+    - [Basic Statistics with NumPy](lectures/week_2/lecture_basic_stats.html)
