@@ -9,19 +9,19 @@ fontsize: 14pt
 ---
 
 - Week 1
-    - [Variable Assignment and Data Types in Python](lectures/week_1/lecture_1.html)
-    - [Container Variable Types in Python and Accessing Elements](lectures/week_1/lecture_2.html)
-    - [Creating and Calling Functions in Python](lectures/week_1/lecture_3.html)
-    - [Type Coercion in Python](lectures/week_1/lecture_4.html)
-    - [Loops and Conditional Flow in Python](lectures/week_1/lecture_5.html)
-    - [Getting Help with Python Programming](lectures/week_1/lecture_6.html)
-    - [Creating a Minimal Reproducible Example (MRE)](lectures/week_1/lecture_7.html)
+    - <a href="lectures/week_1/lecture_variable_assignment.html" target="_blank">Variable Assignment and Data Types in Python</a>
+    - <a href="lectures/week_1/lecture_container_types.html" target="_blank">Container Variable Types in Python and Accessing Elements</a>
+    - <a href="lectures/week_1/lecture_functions.html" target="_blank">Creating and Calling Functions in Python</a>
+    - <a href="lectures/week_1/lecture_type_coercion.html" target="_blank">Type Coercion in Python</a>
+    - <a href="lectures/week_1/lecture_loops_cond_flow.html" target="_blank">Loops and Conditional Flow in Python</a>
+    - <a href="lectures/week_1/lecture_getting_help.html" target="_blank">Getting Help with Python Programming</a>
+    - <a href="lectures/week_1/lecture_mre.html" target="_blank">Creating a Minimal Reproducible Example (MRE)</a>
 
 - Week 2
-    - [NumPy Array Basics](lectures/week_2/lecture_array_basics.html)
-    - [Creating Numpy Arrays](lectures/week_2/lecture_creating_arrays.html)
-    - [Indexing and Slicing in NumPy](lectures/week_2/lecture_indexing_slicing.html)
-    - [Element-wise vs Aggregate Operations in NumPy](lectures/week_2/lecture_element_vs_aggregate.html)
-    - [Broadcasting in NumPy](lectures/week_2/lecture_broadcasting.html)
-    - [Reshaping and Transposing Arrays](lectures/week_2/lecture_reshape_transpose.html)
-    - [Basic Statistics with NumPy](lectures/week_2/lecture_basic_stats.html)
+    - <a href="lectures/week_2/lecture_array_basics.html" target="_blank">NumPy Array Basics</a>
+    - <a href="lectures/week_2/lecture_creating_arrays.html" target="_blank">Creating Numpy Arrays</a>
+    - <a href="lectures/week_2/lecture_indexing_slicing.html" target="_blank">Indexing and Slicing in NumPy</a>
+    - <a href="lectures/week_2/lecture_element_vs_aggregate.html" target="_blank">Element-wise vs Aggregate Operations in NumPy</a>
+    - <a href="lectures/week_2/lecture_broadcasting.html" target="_blank">Broadcasting in NumPy</a>
+    - <a href="lectures/week_2/lecture_reshape_transpose.html" target="_blank">Reshaping and Transposing Arrays</a>
+    - <a href="lectures/week_2/lecture_basic_stats.html" target="_blank">Basic Statistics with NumPy</a>
