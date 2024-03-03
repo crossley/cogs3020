@@ -25,3 +25,10 @@ fontsize: 14pt
     - <a href="lectures/week_2/lecture_broadcasting.html" target="_blank">Broadcasting in NumPy</a>
     - <a href="lectures/week_2/lecture_reshape_transpose.html" target="_blank">Reshaping and Transposing Arrays</a>
     - <a href="lectures/week_2/lecture_basic_stats.html" target="_blank">Basic Statistics with NumPy</a>
+
+- Week 3
+    - <a href="lectures/week_3/lecture_intro_to_matplotlib.html" target="_blank">Introduction to Matplotlib</a>
+    - <a href="lectures/week_3/lecture_basic_plotting.html" target="_blank">Basic Plotting with Matplotlib</a>
+    - <a href="lectures/week_3/lecture_subplots.html" target="_blank">Multiple Plots in One Figure (Subplots)</a>
+    - <a href="lectures/week_3/lecture_plot_types.html" target="_blank">Exploring Different Types of Plots with Matplotlib</a>
+    - <a href="lectures/week_3/lecture_plot_vs_axis.html" target="_blank">A closer look at the Matplotlib Hierarchy</a>
