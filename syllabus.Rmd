@@ -1,0 +1,126 @@
+---
+title: ""
+author: ""
+date: ""
+output: html_document
+fontsize: 10pt
+---
+
+#### Course unit guide
+* <a href="https://unitguides.mq.edu.au/unit_offerings/162978/unit_guide" target="_blank">unit guide</a>
+
+#### Course Schedule
+| Activity | Day       | Time           | Location                          |
+|----------+-----------+----------------+-----------------------------------|
+|Lecture   | Monday    | 10:00 -- 11:30 | 01CC 115 Groupwork Learning Space |
+|Tutorial  | Monday    | 12:00 -- 13:30 | 12SW 318 Tutorial/Computer Room   |
+
+### Weekly Topics
+| Week  | Topic                              |
+|:------|:-----------------------------------|
+| Week 1| Introduction to Python programming |
+| Week 2| Introduction to Python programming |
+| Week 3| Introduction to Python programming |
+| Week 4| Introduction to dynamical systems  |
+| Week 5| Introduction to dynamical systems  |
+| Week 6| Models of single neurons           |
+| Week 7| Models of single neurons           |
+| Week 8| Simple networks and synaptic plasticity |
+| Week 9| Simple networks and synaptic plasticity |
+| Week 10| Simple networks and synaptic plasticity |
+| Week 11| Model from the literature         |
+| Week 12| Model from the literature         |
+| Week 13| Model from the literature         |
+
+Now, all cells in the markdown table are left-aligned.
+
+#### Lecture and tuturial delivery
+* Lectures and tutorials will be delivered on campus in the
+  rooms indicated above unless special circumstances require
+  otherwise.
+
+* There will be no livestream of the lectures. However, the
+  lectures will be recorded and made available on iLearn.
+
+#### Readings
+* **Required Text**: The main readings for this unit are
+  available online [here]().
+
+#### Course Philosophy
+**Python competency**: We will spend a little time working
+together to learn `Python` but I will be moving faster than
+I do in my second year statistics unit where many of you
+might have learned `R`. This course assumes you have a solid
+enough programming background to pick up `Python` as we go.
+
+**Computational literacy**: The main objective of the course
+is for you to be able to spend time with published
+computational modelling papers, and replicate most or all of
+the results in those papers. This is a super power among
+cognitive neuroscientist.
+
+**Mathematical literacy**: Math is beautiful and useful and
+I encourage to learn as much of it as you can. A good goal
+for a casual computational modeller is to have made it
+through linear algebra, calculus, and a first year
+differential equations unit. However, you can still do well,
+have a great time, and learn a lot in this unit without that
+much of a math background. You will certainly have to
+tolerate looking at some fancy looking math --- e.g.,
+derivatives ($\frac{d}{dx}f(x)$), integrals ($\int x dx$),
+and differential equations  ($\frac{d}{dx}f(x) = g(x)$) ---
+but the emphasis will be on translating these things into
+code, not on interacting with them much in the abstract.
+
+#### Performance Evaluation
+* 25% quizzes
+* 40% problem sets
+* 35% final project
+
+**Quizzes**: 10 online quizzes (multiple choice and numeric
+response) designed to assess and provide feedback regarding
+your understanding of core programming and statistics
+concepts. Graded on a continuous 0%-100% scale. The 2 lowest
+quizzes (missed or marked non-credit) may be dropped without
+penalty. These will challenging and they will take time to
+complete. Please do not leave them to the last minute.
+
+**Problem sets**: 4 problem sets will be released
+approximately 1 every three weeks. They will follow the
+tutorial activities closely and will culminate in a full
+statistical analysis and report of real cognitive
+neuroscience data.
+
+**Final project**: Where the problem sets will have guided
+you through the development of several computational models,
+the final project will require you implement a computational
+model taken from the literature (and simplified to be within
+reasonable scope) on your own.
+
+**Grading**: 
+Quizzes will be delivered and marked through iLearn. Problem
+sets and the final exam will be marked by hand. Where
+possible, we will give partial credit on these two
+assessment types.
+
+**Attendance**: Attendance is not compulsory, but is highly
+recommended. This applies both to lecture and tutorial.
+
+## Readings
+The essentials will all be included in the lecture notes,
+but more complete information and structure from each
+lecture can be found in references listed below. For now,
+there are only two books that I know I will draw from, and
+the rest will be journal articles. I will make announcements
+and keep you all informed if this list changes.
+
+* Izhikevich, E. M. (2006). Dynamical Systems in
+Neuroscience: The Geometry of Excitability and Bursting. The
+MIT Press.
+
+* https://www.izhikevich.org/publications/dsn.pdf
+
+* Sutton, R. S., & Barto, A. G. (1998). Reinforcement
+  learning: An introduction. MIT Press.
+
+* https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf
