@@ -32,3 +32,9 @@ fontsize: 14pt
     - <a href="lectures/week_3/lecture_subplots.html" target="_blank">Multiple Plots in One Figure (Subplots)</a>
     - <a href="lectures/week_3/lecture_plot_types.html" target="_blank">Exploring Different Types of Plots with Matplotlib</a>
     - <a href="lectures/week_3/lecture_plot_vs_axis.html" target="_blank">A closer look at the Matplotlib Hierarchy</a>
+
+- Week 4
+    - <a href="lectures/week_4/lecture_functions_and_graphs.html" target="_blank">Functions and Graphs</a>
+    - <a href="lectures/week_4/lecture_derivatives.html" target="_blank">The Derivative of a Function</a>
+    - <a href="lectures/week_4/lecture_integrals.html" target="_blank">The Integral of a Function</a>
+    - <a href="lectures/week_4/lecture_diff_eqs.html" target="_blank">Introduction to differential equations</a>
