@@ -1498,7 +1498,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">Tutorial 2 Solutions</h1>
 <h4 class="author">Author: Matthew J. Crossley</h4>
-<h4 class="date">Last update: 10 March, 2024</h4>
+<h4 class="date">Last update: 11 March, 2024</h4>
 
 </div>
 
@@ -1653,9 +1653,9 @@ ans[ans &lt; 0.5] = 0</code></pre>
 </ul>
 <pre class="python"><code>arr = np.random.randint(0, 10, size=(3, 3))
 print(arr)</code></pre>
-<pre><code>## [[8 8 7]
-##  [5 9 6]
-##  [0 9 7]]</code></pre>
+<pre><code>## [[9 4 8]
+##  [8 7 2]
+##  [2 8 9]]</code></pre>
 <ul>
 <li>Create a 1D NumPy array of size 10 with all elements equal to
 5.</li>
@@ -1680,7 +1680,7 @@ print(arr)</code></pre>
 <pre class="python"><code>arr = np.random.randint(0, 10, size=5)
 arr[arr % 2 == 1] = -1
 print(arr)</code></pre>
-<pre><code>## [-1 -1 -1  6 -1]</code></pre>
+<pre><code>## [8 4 0 2 8]</code></pre>
 <ul>
 <li>Create a 2D NumPy array of shape (3, 3) with random floats between 0
 and 1, then normalize the array by dividing each element by the sum of
@@ -1689,9 +1689,9 @@ all elements.</li>
 <pre class="python"><code>arr = np.random.random((3, 3))
 arr_normalized = arr / arr.sum()
 print(arr_normalized)</code></pre>
-<pre><code>## [[0.0728921  0.05952701 0.15911596]
-##  [0.0723486  0.22200228 0.08771199]
-##  [0.18393673 0.10172854 0.0407368 ]]</code></pre>
+<pre><code>## [[0.13337649 0.16656348 0.05922893]
+##  [0.00355659 0.0971772  0.08548713]
+##  [0.14125792 0.23317085 0.08018141]]</code></pre>
 <ul>
 <li>Create a 1D NumPy array of size 10 with random integers between 0
 and 9, then sort the array in descending order.</li>
@@ -1699,7 +1699,7 @@ and 9, then sort the array in descending order.</li>
 <pre class="python"><code>arr = np.random.randint(0, 10, size=10)
 arr_sorted = np.sort(arr)[::-1]
 print(arr_sorted)</code></pre>
-<pre><code>## [9 8 8 4 3 2 2 2 1 0]</code></pre>
+<pre><code>## [9 9 8 8 5 4 3 3 2 1]</code></pre>
 <ul>
 <li>Create a 2D NumPy array of shape (4, 4) with random integers between
 0 and 9, then calculate the mean of each row.</li>
@@ -1707,7 +1707,7 @@ print(arr_sorted)</code></pre>
 <pre class="python"><code>arr = np.random.randint(0, 10, size=(4, 4))
 arr_row_mean = np.mean(arr, axis=1)
 print(arr_row_mean)</code></pre>
-<pre><code>## [5.5  3.75 3.25 6.  ]</code></pre>
+<pre><code>## [7.5 6.5 4.  7.5]</code></pre>
 <ul>
 <li>Create a 1D NumPy array of size 5 with random integers between 0 and
 9, then calculate the cumulative sum of the array.</li>
@@ -1715,7 +1715,7 @@ print(arr_row_mean)</code></pre>
 <pre class="python"><code>arr = np.random.randint(0, 10, size=5)
 arr_cumsum = np.cumsum(arr)
 print(arr_cumsum)</code></pre>
-<pre><code>## [ 8 16 25 30 33]</code></pre>
+<pre><code>## [ 3 10 14 17 17]</code></pre>
 <ul>
 <li>Create a 1D NumPy array of size 10 with random integers between 0
 and 9, then replace all even numbers with an odd number.</li>
@@ -1724,7 +1724,7 @@ and 9, then replace all even numbers with an odd number.</li>
 mask = arr % 2 == 0
 arr[mask] += 1
 print(arr)</code></pre>
-<pre><code>## [3 9 7 5 3 9 3 1 1 7]</code></pre>
+<pre><code>## [9 3 9 3 1 3 3 1 1 3]</code></pre>
 <ul>
 <li>Create a 2D NumPy array of shape (5, 5) with random integers between
 0 and 9, then replace the diagonal elements with the average of all
@@ -1734,11 +1734,11 @@ elements.</li>
 mask = np.eye(5, dtype=bool)
 arr[mask] = arr.mean()
 print(arr)</code></pre>
-<pre><code>## [[4 2 6 6 1]
-##  [3 4 9 5 1]
-##  [9 1 4 9 3]
-##  [6 2 5 4 7]
-##  [4 0 0 1 4]]</code></pre>
+<pre><code>## [[4 7 6 7 0]
+##  [7 4 3 8 3]
+##  [3 5 4 2 4]
+##  [7 3 6 4 0]
+##  [7 7 6 9 4]]</code></pre>
 <ul>
 <li>Create a 2D NumPy array of shape (4, 4) with random integers between
 0 and 9, then find the location of the maximum value in each row.</li>
@@ -1746,7 +1746,7 @@ print(arr)</code></pre>
 <pre class="python"><code>arr = np.random.randint(0, 10, size=(4, 4))
 max_indices = np.argmax(arr, axis=1)
 print(max_indices)</code></pre>
-<pre><code>## [0 3 2 2]</code></pre>
+<pre><code>## [1 3 2 3]</code></pre>
 <ul>
 <li>Create a 1D NumPy array of size 20 with random integers between 0
 and 9, then find the top 5 most frequent values in the array.</li>
@@ -1756,7 +1756,7 @@ unique, counts = np.unique(arr, return_counts=True)
 top_indices = np.argsort(counts)[-5:]
 top_values = unique[top_indices][::-1]
 print(top_values)</code></pre>
-<pre><code>## [7 6 0 9 8]</code></pre>
+<pre><code>## [8 6 7 5 3]</code></pre>
 <ul>
 <li>Create a 2D NumPy array of shape (3, 3) with random floats between 0
 and 1, then find the row with the smallest sum.</li>
@@ -1765,7 +1765,7 @@ and 1, then find the row with the smallest sum.</li>
 row_sums = np.sum(arr, axis=1)
 min_index = np.argmin(row_sums)
 print(arr[min_index])</code></pre>
-<pre><code>## [0.01318937 0.05748213 0.64784066]</code></pre>
+<pre><code>## [0.33926861 0.34827414 0.0756203 ]</code></pre>
 <ul>
 <li>Create a 1D NumPy array of size 10 with random integers between 0
 and 9, then split the array into 2 smaller arrays such that the first
@@ -1776,7 +1776,7 @@ numbers.</li>
 even = arr[arr % 2 == 0]
 odd = arr[arr % 2 == 1]
 print(even, odd)</code></pre>
-<pre><code>## [6 2 4 4 6 8 6 4] [5 5]</code></pre>
+<pre><code>## [8 0 8 0 8] [3 9 1 9 7]</code></pre>
 
 
 
