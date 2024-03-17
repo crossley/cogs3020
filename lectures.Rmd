@@ -37,4 +37,8 @@ fontsize: 14pt
     - <a href="lectures/week_4/lecture_functions_and_graphs.html" target="_blank">Functions and Graphs</a>
     - <a href="lectures/week_4/lecture_derivatives.html" target="_blank">The Derivative of a Function</a>
     - <a href="lectures/week_4/lecture_integrals.html" target="_blank">The Integral of a Function</a>
-    - <a href="lectures/week_4/lecture_diff_eqs.html" target="_blank">Introduction to differential equations</a>
+
+- Week 5
+    - <a href="lectures/week_5/lecture_diff_eqs.html" target="_blank">Introduction to Differential Equations</a>
+    - <a href="lectures/week_5/lecture_eulers_method.html" target="_blank">Introduction to Euler's Method</a>
+    - <a href="lectures/week_5/lecture_equilibrium.html" target="_blank">Introduction to Equilibrium</a>

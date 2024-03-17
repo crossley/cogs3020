@@ -12,7 +12,7 @@
 <meta name="author" content="Author: Matthew J. Crossley" />
 
 
-<title>Tutorial 2 Solutions</title>
+<title>Tutorial 5</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1468,6 +1468,12 @@ font-size: 0.90em;
 .tocify .list-group-item {
 border-radius: 0px;
 }
+.tocify-subheader {
+display: inline;
+}
+.tocify-subheader .tocify-item {
+font-size: 0.95em;
+}
 </style>
 
 
@@ -1496,287 +1502,70 @@ border-radius: 0px;
 
 
 
-<h1 class="title toc-ignore">Tutorial 2 Solutions</h1>
+<h1 class="title toc-ignore">Tutorial 5</h1>
 <h4 class="author">Author: Matthew J. Crossley</h4>
 <h4 class="date">Last update: 18 March, 2024</h4>
 
 </div>
 
 
+<div id="learning-objective" class="section level2">
+<h2>Learning objective</h2>
+<ul>
+<li>understand how to use Euler’s method to solve ordinary differential
+equations</li>
+</ul>
+</div>
+<div id="example-eulers-method-code" class="section level2">
+<h2>Example Euler’s method code</h2>
 <pre class="python"><code>import numpy as np
-import matplotlib.pyplot as plt</code></pre>
-<ul>
-<li>Create a <code>numpy.ndarray</code> with shape <code>(3,)</code> and
-set its elements to <code>1</code>, <code>2</code>, and <code>3</code>,
-in that order.</li>
-</ul>
-<pre class="python"><code>ans = np.array([1, 2, 3])</code></pre>
-<ul>
-<li>Create a <code>numpy.ndarray</code> with shape <code>(3, 1)</code>
-and set its elements to <code>1</code>, <code>2</code>, and
-<code>3</code>, in that order.</li>
-</ul>
-<pre class="python"><code>ans = np.array([[1, 2, 3]]).T</code></pre>
-<ul>
-<li>Create a <code>numpy.ndarray</code> with shape <code>(3, 2)</code>
-and set the elements indexed by <code>[:, 0]</code> to <code>1</code>,
-<code>2</code>, and <code>3</code>, and those indexed by
-<code>[:, 1]</code> to <code>4</code>, <code>5</code>, <code>6</code> in
-that order.</li>
-</ul>
-<pre class="python"><code>ans = np.array([[1, 2, 3], [4, 5, 6]]).T</code></pre>
-<ul>
-<li>Create a <code>numpy.ndarray</code> with shape <code>(4, 4)</code>
-and set every element to <code>0</code> with data type
-<code>int</code>.</li>
-</ul>
-<pre class="python"><code>ans = np.zeros((4, 4), dtype=int)</code></pre>
-<ul>
-<li>Create a <code>numpy.ndarray</code> with shape <code>(4, 4)</code>
-and set every element to <code>1</code> data type
-<code>float</code>.</li>
-</ul>
-<pre class="python"><code>ans = np.ones((4, 4), dtype=float)</code></pre>
-<ul>
-<li>Create a <code>numpy.ndarray</code> that contains a sequence of
-<code>6</code> evenly spaced numbers starting with the
-<code>float</code> number <code>1.2</code> and ending with the
-<code>float</code> number <code>7.5</code>.</li>
-</ul>
-<pre class="python"><code>ans = np.linspace(1.2, 7.5, 6)</code></pre>
-<ul>
-<li>Create a <code>numpy.ndarray</code> that contains the sequence of
-numbers starting with the <code>int</code> number <code>1</code> and
-ending with the <code>int</code> number <code>7</code> with every
-<code>2</code> increments included.</li>
-</ul>
-<pre class="python"><code>ans = np.arange(1, 7, 2)</code></pre>
-<ul>
-<li>Follow the instructions in the following code chunk to define
-<code>x</code> and <code>y</code>.</li>
-</ul>
-<pre class="python"><code>tmp = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
-# array([[ 1,  2,  3],
-#        [ 4,  5,  6],
-#        [ 7,  8,  9],
-#        [10, 11, 12]])
+import matplotlib.pyplot as plt
 
-# without using np.array(), create a new array that prints
-# as follows:
-# x = ???
-# array([[ 1,  4,  7, 10],
-#        [ 2,  5,  8, 11],
-#        [ 3,  6,  9, 12]])
+# Define the step size
+dx = 1
 
-# without using np.array(), create a new array that prints
-# as follows:
-# y = ???
-# array([[ 1,  2,  3,  4],
-#        [ 5,  6,  7,  8],
-#        [ 9, 10, 11, 12]])
+# define the end x
+xf = 5.0
 
-x = tmp.T
-y = np.reshape(tmp, (3, 4))</code></pre>
-<ul>
-<li>For <code>x</code> and <code>y</code> defined in the following code
-chunk, compute their element-wise difference.</li>
-</ul>
-<pre class="python"><code>x = np.array([[1, 2, 3], [4, 5, 6]])
-y = np.array([[5, 4, 3], [2, 1, 0]])
-ans = x - y</code></pre>
-<ul>
-<li>Compute the matrix product of <code>x</code> and
-<code>y.T</code>.</li>
-</ul>
-<pre class="python"><code>ans = np.dot(x, y.T)</code></pre>
-<ul>
-<li>Use the function <code>np.max()</code> to compute the maximum value
-in the array <code>x</code>.</li>
-</ul>
-<pre class="python"><code>ans = x.max()</code></pre>
-<ul>
-<li>Use the <code>numpy.ndarray</code> method <code>max()</code> to
-return the maximum values along the first dimension in the array
-<code>y</code>.</li>
-</ul>
-<pre class="python"><code>ans = x.max(axis=1)</code></pre>
-<ul>
-<li>Compute the element-wise square root of the following array
-<code>np.array([4, 33, 9])</code>.</li>
-</ul>
-<pre class="python"><code>ans = np.sqrt(np.array([4, 33, 9]))</code></pre>
-<ul>
-<li>Define <code>x</code> and <code>y</code> as shown in the following
-code chunk.</li>
-</ul>
-<pre class="python"><code>x = np.random.randn(3, 4, 2)
-y = np.ones(x.shape)</code></pre>
-<ul>
-<li>Use slicing or indexing to return the first 2 elements of
-<code>x</code> in dimension <code>1</code>, which should result in an
-array with shape equal to <code>(2, 4, 2)</code>.</li>
-</ul>
-<pre class="python"><code>ans= x[:2, :]</code></pre>
-<ul>
-<li>Use slicing or indexing to return the first element in
-<code>x</code> in dimension <code>1</code>, the second element in
-dimension <code>2</code>, and every element in dimension <code>3</code>.
-Your result should be an array with shape equal to
-<code>(2, )</code>.</li>
-</ul>
-<pre class="python"><code>ans= x[0, 1, :]</code></pre>
-<ul>
-<li>Concatenate <code>x</code> and <code>y</code> along the second
-dimension.</li>
-</ul>
-<pre class="python"><code>ans= np.concatenate((x, y), 1)</code></pre>
-<ul>
-<li>Make a deep copy of <code>x</code>, add <code>10</code> to every
-element.</li>
-</ul>
-<pre class="python"><code>ans= np.array(x) + 10</code></pre>
-<ul>
-<li>Make a deep copy of <code>x</code>, set every element in the first
-dimension to zero.</li>
-</ul>
-<pre class="python"><code>ans[0, :, :] = 0</code></pre>
-<ul>
-<li>Make a deep copy of <code>x</code>, use boolean indexing to set
-every element of <code>x</code> that is less than <code>0.5</code> to
-zero.</li>
-</ul>
-<pre class="python"><code>ans = np.array(x)
-ans[ans &lt; 0.5] = 0</code></pre>
-<ul>
-<li>Create a 2D NumPy array of shape (3, 3) with random integers between
-0 and 9.</li>
-</ul>
-<pre class="python"><code>arr = np.random.randint(0, 10, size=(3, 3))
-print(arr)</code></pre>
-<pre><code>## [[0 1 5]
-##  [0 9 6]
-##  [0 5 5]]</code></pre>
-<ul>
-<li>Create a 1D NumPy array of size 10 with all elements equal to
-5.</li>
-</ul>
-<pre class="python"><code>arr = np.ones(10, dtype=int) * 5
-print(arr)</code></pre>
-<pre><code>## [5 5 5 5 5 5 5 5 5 5]</code></pre>
-<ul>
-<li>Create a 2D NumPy array of shape (4, 4) with elements on the main
-diagonal equal to 1 and all other elements equal to 0.</li>
-</ul>
-<pre class="python"><code>arr = np.eye(4, dtype=int)
-print(arr)</code></pre>
-<pre><code>## [[1 0 0 0]
-##  [0 1 0 0]
-##  [0 0 1 0]
-##  [0 0 0 1]]</code></pre>
-<ul>
-<li>Create a 1D NumPy array of size 5 with random integers between 0 and
-9, then replace all odd numbers with -1.</li>
-</ul>
-<pre class="python"><code>arr = np.random.randint(0, 10, size=5)
-arr[arr % 2 == 1] = -1
-print(arr)</code></pre>
-<pre><code>## [ 6 -1 -1 -1  8]</code></pre>
-<ul>
-<li>Create a 2D NumPy array of shape (3, 3) with random floats between 0
-and 1, then normalize the array by dividing each element by the sum of
-all elements.</li>
-</ul>
-<pre class="python"><code>arr = np.random.random((3, 3))
-arr_normalized = arr / arr.sum()
-print(arr_normalized)</code></pre>
-<pre><code>## [[0.06259561 0.05596993 0.02377571]
-##  [0.17059523 0.00856689 0.16004428]
-##  [0.0804495  0.22175972 0.21624313]]</code></pre>
-<ul>
-<li>Create a 1D NumPy array of size 10 with random integers between 0
-and 9, then sort the array in descending order.</li>
-</ul>
-<pre class="python"><code>arr = np.random.randint(0, 10, size=10)
-arr_sorted = np.sort(arr)[::-1]
-print(arr_sorted)</code></pre>
-<pre><code>## [9 7 6 6 3 3 3 2 2 0]</code></pre>
-<ul>
-<li>Create a 2D NumPy array of shape (4, 4) with random integers between
-0 and 9, then calculate the mean of each row.</li>
-</ul>
-<pre class="python"><code>arr = np.random.randint(0, 10, size=(4, 4))
-arr_row_mean = np.mean(arr, axis=1)
-print(arr_row_mean)</code></pre>
-<pre><code>## [4.75 5.5  3.   6.25]</code></pre>
-<ul>
-<li>Create a 1D NumPy array of size 5 with random integers between 0 and
-9, then calculate the cumulative sum of the array.</li>
-</ul>
-<pre class="python"><code>arr = np.random.randint(0, 10, size=5)
-arr_cumsum = np.cumsum(arr)
-print(arr_cumsum)</code></pre>
-<pre><code>## [ 7 11 15 19 19]</code></pre>
-<ul>
-<li>Create a 1D NumPy array of size 10 with random integers between 0
-and 9, then replace all even numbers with an odd number.</li>
-</ul>
-<pre class="python"><code>arr = np.random.randint(0, 10, size=10)
-mask = arr % 2 == 0
-arr[mask] += 1
-print(arr)</code></pre>
-<pre><code>## [7 9 7 3 3 9 3 7 1 7]</code></pre>
-<ul>
-<li>Create a 2D NumPy array of shape (5, 5) with random integers between
-0 and 9, then replace the diagonal elements with the average of all
-elements.</li>
-</ul>
-<pre class="python"><code>arr = np.random.randint(0, 10, size=(5, 5))
-mask = np.eye(5, dtype=bool)
-arr[mask] = arr.mean()
-print(arr)</code></pre>
-<pre><code>## [[4 9 4 4 2]
-##  [6 4 7 8 4]
-##  [3 6 4 9 5]
-##  [0 1 9 4 9]
-##  [3 3 8 5 4]]</code></pre>
-<ul>
-<li>Create a 2D NumPy array of shape (4, 4) with random integers between
-0 and 9, then find the location of the maximum value in each row.</li>
-</ul>
-<pre class="python"><code>arr = np.random.randint(0, 10, size=(4, 4))
-max_indices = np.argmax(arr, axis=1)
-print(max_indices)</code></pre>
-<pre><code>## [1 1 0 2]</code></pre>
-<ul>
-<li>Create a 1D NumPy array of size 20 with random integers between 0
-and 9, then find the top 5 most frequent values in the array.</li>
-</ul>
-<pre class="python"><code>arr = np.random.randint(0, 10, size=20)
-unique, counts = np.unique(arr, return_counts=True)
-top_indices = np.argsort(counts)[-5:]
-top_values = unique[top_indices][::-1]
-print(top_values)</code></pre>
-<pre><code>## [6 3 2 9 8]</code></pre>
-<ul>
-<li>Create a 2D NumPy array of shape (3, 3) with random floats between 0
-and 1, then find the row with the smallest sum.</li>
-</ul>
-<pre class="python"><code>arr = np.random.random((3, 3))
-row_sums = np.sum(arr, axis=1)
-min_index = np.argmin(row_sums)
-print(arr[min_index])</code></pre>
-<pre><code>## [0.84142231 0.09381965 0.69898541]</code></pre>
-<ul>
-<li>Create a 1D NumPy array of size 10 with random integers between 0
-and 9, then split the array into 2 smaller arrays such that the first
-array contains the even numbers and the second array contains the odd
-numbers.</li>
-</ul>
-<pre class="python"><code>arr = np.random.randint(0, 10, size=10)
-even = arr[arr % 2 == 0]
-odd = arr[arr % 2 == 1]
-print(even, odd)</code></pre>
-<pre><code>## [4 2 8 4] [3 3 7 1 7 7]</code></pre>
+# define the number of steps
+n = int(xf/dx)
+
+# define the x array
+x = np.linspace(0, xf, n)
+
+# Create an array to store estimated fx values
+fx = np.zeros(x.shape)
+
+# Create an array to store estimated dffx values
+dfdx = np.zeros(x.shape)
+
+# Set the initial conditions
+fx[0] = 1
+
+# Use Euler&#39;s method to solve the differential equation
+for i in range(1, n):
+    # rate of change of f(x) is defined by the differential
+    # equation. Here, we are solving df/dx = f(x).
+    dfdx[i-1] = fx[i-1]
+
+    # The next value of f(x) is estimated to be the previous
+    # value + the rate of change * the step size
+    fx[i] = fx[i-1] + dfdx[i-1] * dx
+
+# Create a figure and axis
+fig, ax = plt.subplots(1, 1, squeeze=False, figsize=(8, 5))
+ax[0, 0].plot(x, fx, label=&#39;Euler Method Estimate&#39;)
+ax[0, 0].set_ylabel(&#39;f(x)&#39;)
+ax[0, 0].set_xlabel(&#39;x&#39;)
+ax[0, 0].legend()
+plt.show()</code></pre>
+</div>
+<div id="apply-eulers-method-to-lecture-examples" class="section level2">
+<h2>Apply Euler’s method to lecture examples</h2>
+</div>
+<div id="work-on-the-quizzes" class="section level2">
+<h2>Work on the quizzes</h2>
+</div>
 
 
 
@@ -1836,7 +1625,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
+    options.showAndHide = false;
     options.smoothScroll = true;
 
     // tocify
