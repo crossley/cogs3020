@@ -42,3 +42,11 @@ fontsize: 14pt
     - <a href="lectures/week_5/lecture_diff_eqs.html" target="_blank">Introduction to Differential Equations</a>
     - <a href="lectures/week_5/lecture_eulers_method.html" target="_blank">Introduction to Euler's Method</a>
     - <a href="lectures/week_5/lecture_equilibrium.html" target="_blank">Introduction to Equilibrium</a>
+
+- Week 6
+    - Special talk by F. Gregory Ashby
+
+- Week 7
+    - <a href="lectures/week_7/lecture_7.html" target="_blank">Introduction to Hodgkin Huxley</a>
+
+
