@@ -31,3 +31,6 @@ fontsize: 14pt
 
 - Week 8
     - <a href="tutorials/tutorial_8.html" target="_blank">Tutorial 8</a>
+
+- Week 9
+    - <a href="tutorials/tutorial_9.html" target="_blank">Tutorial 9</a>
