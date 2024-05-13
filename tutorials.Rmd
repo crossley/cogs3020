@@ -34,3 +34,9 @@ fontsize: 14pt
 
 - Week 9
     - <a href="tutorials/tutorial_9.html" target="_blank">Tutorial 9</a>
+
+- Week 10
+    - <a href="tutorials/tutorial_9.html" target="_blank">Tutorial 10</a>
+
+- Week 11
+    - <a href="tutorials/tutorial_9.html" target="_blank">Tutorial 11</a>
