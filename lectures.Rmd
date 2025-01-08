@@ -1,0 +1,52 @@
+---
+title: "Lectures"
+description: Computational Neuroscience
+output:
+  html_document:
+    toc: false 
+    theme: cosmo
+fontsize: 14pt
+---
+
+- Week 1
+    - <a href="lectures/week_1/lecture_variable_assignment.html" target="_blank">Variable Assignment and Data Types in Python</a>
+    - <a href="lectures/week_1/lecture_container_types.html" target="_blank">Container Variable Types in Python and Accessing Elements</a>
+    - <a href="lectures/week_1/lecture_functions.html" target="_blank">Creating and Calling Functions in Python</a>
+    - <a href="lectures/week_1/lecture_type_coercion.html" target="_blank">Type Coercion in Python</a>
+    - <a href="lectures/week_1/lecture_loops_cond_flow.html" target="_blank">Loops and Conditional Flow in Python</a>
+    - <a href="lectures/week_1/lecture_getting_help.html" target="_blank">Getting Help with Python Programming</a>
+    - <a href="lectures/week_1/lecture_mre.html" target="_blank">Creating a Minimal Reproducible Example (MRE)</a>
+
+- Week 2
+    - <a href="lectures/week_2/lecture_array_basics.html" target="_blank">NumPy Array Basics</a>
+    - <a href="lectures/week_2/lecture_creating_arrays.html" target="_blank">Creating Numpy Arrays</a>
+    - <a href="lectures/week_2/lecture_indexing_slicing.html" target="_blank">Indexing and Slicing in NumPy</a>
+    - <a href="lectures/week_2/lecture_element_vs_aggregate.html" target="_blank">Element-wise vs Aggregate Operations in NumPy</a>
+    - <a href="lectures/week_2/lecture_broadcasting.html" target="_blank">Broadcasting in NumPy</a>
+    - <a href="lectures/week_2/lecture_reshape_transpose.html" target="_blank">Reshaping and Transposing Arrays</a>
+    - <a href="lectures/week_2/lecture_basic_stats.html" target="_blank">Basic Statistics with NumPy</a>
+
+- Week 3
+    - <a href="lectures/week_3/lecture_intro_to_matplotlib.html" target="_blank">Introduction to Matplotlib</a>
+    - <a href="lectures/week_3/lecture_basic_plotting.html" target="_blank">Basic Plotting with Matplotlib</a>
+    - <a href="lectures/week_3/lecture_subplots.html" target="_blank">Multiple Plots in One Figure (Subplots)</a>
+    - <a href="lectures/week_3/lecture_plot_types.html" target="_blank">Exploring Different Types of Plots with Matplotlib</a>
+    - <a href="lectures/week_3/lecture_plot_vs_axis.html" target="_blank">A closer look at the Matplotlib Hierarchy</a>
+
+- Week 4
+    - <a href="lectures/week_4/lecture_functions_and_graphs.html" target="_blank">Functions and Graphs</a>
+    - <a href="lectures/week_4/lecture_derivatives.html" target="_blank">The Derivative of a Function</a>
+    - <a href="lectures/week_4/lecture_integrals.html" target="_blank">The Integral of a Function</a>
+
+- Week 5
+    - <a href="lectures/week_5/lecture_diff_eqs.html" target="_blank">Introduction to Differential Equations</a>
+    - <a href="lectures/week_5/lecture_eulers_method.html" target="_blank">Introduction to Euler's Method</a>
+    - <a href="lectures/week_5/lecture_equilibrium.html" target="_blank">Introduction to Equilibrium</a>
+
+- Week 6
+    - Special talk by F. Gregory Ashby
+
+- Week 7
+    - <a href="lectures/week_7/lecture_7.html" target="_blank">Introduction to Hodgkin Huxley</a>
+
+

@@ -1,0 +1,19 @@
+---
+title: "COGS3020"
+description: Computational Neuroscience
+output:
+  html_document:
+    toc: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+## Weclome
+
+Please use the nav bar to get around.
+
+<!---
+<center>
+    ![](img/brain_bling.jpg)
+</center>
+--->
