@@ -3,3 +3,5 @@ type: default
 left:
   - text: "Lectures"
     href: lectures.html
+  - text: "Tutorials"
+    href: tutorials.html
