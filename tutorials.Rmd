@@ -40,3 +40,9 @@ fontsize: 14pt
 
 - Week 11
     - <a href="tutorials/tutorial_11.html" target="_blank">Tutorial 11</a>
+
+- Week 12
+    - <a href="tutorials/tutorial_11.html" target="_blank">Tutorial 12</a>
+
+- Week 13
+    - <a href="tutorials/tutorial_11.html" target="_blank">Tutorial 13</a>

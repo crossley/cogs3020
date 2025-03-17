@@ -12,7 +12,7 @@
 <meta name="author" content="Author: Matthew J. Crossley" />
 
 
-<title>Tutorial 11</title>
+<title>Tutorial 10</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1502,144 +1502,16 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Tutorial 11</h1>
+<h1 class="title toc-ignore">Tutorial 10</h1>
 <h4 class="author">Author: Matthew J. Crossley</h4>
-<h4 class="date">Last update: 13 May, 2024</h4>
+<h4 class="date">Last update: 17 March, 2025</h4>
 
 </div>
 
 
 <ul>
-<li><p>Work on quizzes, homework 4, and the final project.</p></li>
-<li><p>Here is the code from lecture:</p></li>
+<li>coming soon…</li>
 </ul>
-<pre class="python"><code>import numpy as np
-import matplotlib.pyplot as plt
-
-# The point of todays lecture is synpatic plasticity.  So
-# lets begin by creating the simplest possible network to
-# play with.
-# A -&gt; B
-# synatpic plasticity is changing the weight of connection
-# between A and B
-
-T = 3000
-tau = 0.1
-t = np.arange(0, T, tau)
-n = t.shape[0]
-
-n_trials = 100
-
-v_A = np.zeros(n)
-g_A = np.zeros(n)
-spike_A = np.zeros(n)
-
-v_B = np.zeros(n)
-g_B = np.zeros(n)
-spike_B = np.zeros(n)
-
-vpeak = 1
-vreset = 0
-
-psp_amp = 1e5
-psp_decay = 1000
-
-# learning rule stuff
-w_AB = np.zeros(n_trials)
-w_AB[0] = 1e-6
-alpha = 1e-18
-
-pr_alpha = 0.1
-predicted_reward = np.zeros(n_trials)
-obtained_reward = np.zeros(n_trials)
-rpe = np.zeros(n_trials)
-
-response = np.zeros(n_trials)
-resp_thresh = 1e9
-
-output_act = np.zeros(n_trials)
-
-for trl in range(n_trials - 1):
-    for tt in range(1, n):
-
-        dt = t[tt] - t[tt - 1]
-
-        dvdt_A = v_A[tt - 1]**2 + 0.0001
-        dvdt_B = v_B[tt - 1]**2 + w_AB[trl] * g_A[tt - 1]
-
-        v_A[tt] = v_A[tt - 1] + dvdt_A * dt
-        v_B[tt] = v_B[tt - 1] + dvdt_B * dt
-
-        if v_A[tt] &gt; vpeak:
-            v_A[tt] = vreset
-            spike_A[tt] = 1
-
-        if v_B[tt] &gt; vpeak:
-            v_B[tt] = vreset
-            spike_B[tt] = 1
-
-        dgdt_A = (-g_A[tt - 1] + psp_amp * spike_A[tt - 1]) / psp_decay
-        dgdt_B = (-g_B[tt - 1] + psp_amp * spike_B[tt - 1]) / psp_decay
-
-        g_A[tt] = g_A[tt - 1] + dgdt_A * dt
-        g_B[tt] = g_B[tt - 1] + dgdt_B * dt
-
-    # add an action selection mechanism
-    # neuron A is a stimulus (input) unit
-    # neuron B is a response (output) unit
-    motor_output = g_B.sum()
-    output_act[trl] = motor_output
-    if motor_output &gt; resp_thresh:
-        response[trl] = 1
-
-    # explore on 10% of trials
-    if np.random.rand() &lt; 0.1:
-        response[trl] = 1
-
-    if response[trl] == 1:
-        if np.random.rand() &lt; 1:
-            obtained_reward[trl] = 1
-
-    # compute reward prediction error
-    rpe[trl] = obtained_reward[trl] - predicted_reward[trl]
-
-    # update predicted reward
-    predicted_reward[trl + 1] = predicted_reward[trl] + pr_alpha * rpe[trl]
-
-    # learning happens once per trial
-    # Start with simplest and dumbest possible Hebbian rule
-    pre = np.sum(g_A)
-    post = np.sum(g_B)
-    w_AB[trl + 1] = w_AB[trl] + alpha * pre * post * rpe[trl]
-
-#    fig, ax = plt.subplots(2, 1, squeeze=False, figsize=(10, 10))
-#    ax[0, 0].plot(t, v_A, label=&#39;V_A&#39;)
-#    ax[1, 0].plot(t, v_B, label=&#39;B&#39;)
-#    plt.show()
-
-fig, ax = plt.subplots(4, 1, squeeze=False, figsize=(10, 10))
-
-ax[0, 0].plot(np.arange(0, n_trials, 1),
-              obtained_reward,
-              label=&#39;Obtained Reward&#39;)
-ax[0, 0].plot(np.arange(0, n_trials, 1),
-              predicted_reward,
-              label=&#39;Predicted Reward&#39;)
-ax[0, 0].plot(np.arange(0, n_trials, 1), rpe, label=&#39;RPE&#39;)
-ax[0, 0].legend()
-
-ax[1, 0].plot(np.arange(0, n_trials, 1), w_AB, label=&#39;w_AB&#39;)
-ax[1, 0].set_xlabel(&#39;Trial&#39;)
-ax[1, 0].set_ylabel(&#39;Weight&#39;)
-ax[1, 0].legend()
-
-ax[2, 0].plot(np.arange(0, n_trials, 1), output_act, label=&#39;output activation&#39;)
-ax[2, 0].axhline(y=resp_thresh, color=&#39;r&#39;, linestyle=&#39;--&#39;)
-
-ax[3, 0].plot(np.arange(0, n_trials, 1), response, label=&#39;Response&#39;)
-ax[3, 0].legend()
-
-plt.show()</code></pre>
 
 
 
