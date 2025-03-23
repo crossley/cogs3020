@@ -46,7 +46,7 @@ fontsize: 14pt
     - <a href="lectures/week_5/lecture_diff_eqs.html" target="_blank">Introduction to Differential Equations</a>
     - <a href="lectures/week_5/lecture_eulers_method.html" target="_blank">Introduction to Euler's Method</a>
     - <a href="lectures/week_5/lecture_equilibrium.html" target="_blank">Introduction to Equilibrium</a>
-    - <a href="lectures/week_5/lecture_passive_signals.html" target="_blank">Euler's Method: Passive Signals in Neurons</a>
+    - <a href="lectures/week_5/lecture_eulers_method_passive_signals.html" target="_blank">Euler's Method: Passive Signals in Neurons</a>
 
 ## Models of single neurons
 - Week 6
