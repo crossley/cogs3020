@@ -3124,6 +3124,69 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 
 
@@ -3477,8 +3540,63 @@ f(x_0) = 1
 </article></slide><slide class=""><hgroup><h2>Euler’s Method: Code</h2></hgroup><article  id="eulers-method-code">
 
 <ul>
-<li>We now will switch to a Python environment to demonstrate the code for Euler’s method. Please see the lecture recording / tutuorial for the code.</li>
-</ul></article></slide>
+<li>In the following slides we will implement Euler’s method in Python for a simple differential equation.</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Setting up the simulation</h2></hgroup><article  id="setting-up-the-simulation">
+
+<p>We begin by importing the required libraries and specifying the duration and time step.</p>
+
+<pre class = 'prettyprint lang-python'>import numpy as np
+import matplotlib.pyplot as plt
+
+# Duration of simulation in ms
+T = 1000
+
+# Time step (sample rate) in ms
+dt = 0.1</pre>
+
+</article></slide><slide class=""><hgroup><h2>Creating the time vector</h2></hgroup><article  id="creating-the-time-vector">
+
+<p>We now create a vector of sampled time points.</p>
+
+<pre class = 'prettyprint lang-python'># Vector of sampled times
+t = np.arange(0, T, dt)
+
+# Total number of time steps
+N = t.shape[0]</pre>
+
+</article></slide><slide class=""><hgroup><h2>Initializing the state</h2></hgroup><article  id="initializing-the-state">
+
+<p>We define a vector to hold the system’s state over time.</p>
+
+<pre class = 'prettyprint lang-python'># Vector of state values
+x = np.zeros(N)
+
+# Set the initial state
+x[0] = 1</pre>
+
+</article></slide><slide class=""><hgroup><h2>Euler’s Method: The loop</h2></hgroup><article  id="eulers-method-the-loop">
+
+<p>We now apply Euler’s method using a <code>for</code> loop.</p>
+
+<ul>
+<li><p><code>dxdt</code> is the <strong>right-hand side of the differential equation</strong></p></li>
+<li><p>It defines the <strong>rate of change of the system</strong> at each time step</p></li>
+</ul>
+
+<pre class = 'prettyprint lang-python'>for i in range(1, N):
+    dt = t[i] - t[i-1]
+    dxdt = x[i-1]  # RHS of dx/dt = x
+    x[i] = x[i-1] + dxdt * dt</pre>
+
+</article></slide><slide class=""><hgroup><h2>Visualizing the result</h2></hgroup><article  id="visualizing-the-result">
+
+<pre class = 'prettyprint lang-python'>plt.plot(t, x)
+plt.xlabel(&quot;Time&quot;)
+plt.ylabel(&quot;x(t)&quot;)
+plt.title(&quot;Euler’s Method Approximation&quot;)
+plt.show()</pre></article></slide>
 
 
   <slide class="backdrop"></slide>
