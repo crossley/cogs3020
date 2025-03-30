@@ -3189,26 +3189,9 @@ ul.task-list{list-style: none;}
 <li>Early step toward action potentials</li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Na Activation Only (m)</h2></hgroup><article  id="na-activation-only-m">
-
-<p><strong>Script:</strong> <code>active_na_conductance.py</code></p>
-
-<p><strong>Equations:</strong> \[
-\frac{dV}{dt} = g_K(E_K - V) + g_{Na}(E_{Na} - V) + I_{ext}(t) \\
-\frac{dm}{dt} = \frac{m_\infty(V) - m}{\tau_m(V)}
-\] \[
-g_{Na} = g_{Na}^{max} \cdot m^3
-\]</p>
-
-<ul>
-<li><code>m</code> is the activation gate</li>
-<li>Voltage-dependent rise in Na⁺ conductance</li>
-<li>Still lacks inactivation</li>
-</ul>
-
 </article></slide><slide class=""><hgroup><h2>Na Activation + Inactivation (m, h)</h2></hgroup><article  id="na-activation-inactivation-m-h">
 
-<p><strong>Script:</strong> <code>active_na_k_conductance.py</code></p>
+<p><strong>Script:</strong> <code>active_na_conductance.py</code></p>
 
 <p><strong>Equations:</strong> \[
 \frac{dV}{dt} = I_{Na} + I_K + I_{ext} \\
@@ -3221,6 +3204,14 @@ I_{Na} = g_{Na}^{max} m^3 h (E_{Na} - V) \\
 <li>Sodium channels open with <code>m</code> and close with <code>h</code></li>
 <li>Enables rise and fall of sodium current</li>
 <li>Brings us closer to real spike dynamics</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Active Na + K Conductance</h2></hgroup><article  id="active-na-k-conductance">
+
+<p><strong>Script:</strong> <code>active_na_k_conductance.py</code></p>
+
+<ul>
+<li>Just skip to next slide please</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>Na + K with Leak Conductance</h2></hgroup><article  id="na-k-with-leak-conductance">
