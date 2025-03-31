@@ -13,7 +13,7 @@
 
 <meta name="date" content="2025-01-01" />
 
-<title>From Passive to Active: Neuron Models with Euler’s Method</title>
+<title>smooth_na_conductance.py</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,95 +350,124 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">From Passive to Active: Neuron Models with
-Euler’s Method</h1>
+<h1 class="title toc-ignore">smooth_na_conductance.py</h1>
 <h4 class="author">Matthew J. Crossley</h4>
 <h4 class="date">2025</h4>
 
 </div>
 
 
-<div id="passive-potassium-dynamics" class="section level2">
-<h2>Passive Potassium Dynamics</h2>
-<p><strong>Script:</strong> <code>passive_dynamics_K.py</code></p>
-<p><strong>Differential equation:</strong> <span class="math display">\[
-\frac{dV}{dt} = \frac{E_K - V}{\tau} + I_{ext}(t)
-\]</span></p>
-<ul>
-<li>One passive ion species: potassium (K⁺)</li>
-<li>No voltage dependence</li>
-<li>External current can depolarize or hyperpolarize the membrane</li>
-<li>Equilibrium reached at the Nernst potential for K⁺</li>
-</ul>
-<p><strong>Python:</strong> Uses Euler’s method to simulate membrane
-voltage over time.</p>
-</div>
-<div id="passive-na-k-dynamics" class="section level2">
-<h2>Passive Na + K Dynamics</h2>
-<p><strong>Script:</strong> <code>passive_two_ion_dynamics.py</code></p>
-<p><strong>Differential equation:</strong> <span class="math display">\[
-\frac{dV}{dt} = g_K(E_K - V) + g_{Na}(E_{Na} - V) + I_{ext}(t)
-\]</span></p>
-<ul>
-<li>Both K⁺ and Na⁺ included</li>
-<li>Constant (passive) conductances</li>
-<li>Shows how membrane potential is shaped by the balance between
-driving forces</li>
-</ul>
-</div>
-<div id="smooth-voltage-dependent-na-conductance" class="section level2">
-<h2>Smooth Voltage-Dependent Na Conductance</h2>
-<p><strong>Script:</strong> <code>smooth_na_conductance.py</code></p>
-<p><strong>Added equation:</strong> <span class="math display">\[
-\frac{dg_{Na}}{dt} = \frac{g_{Na}^{\infty}(V) - g_{Na}}{\tau}
-\]</span></p>
-<ul>
-<li>Voltage affects Na conductance dynamically</li>
-<li>Produces stronger, sharper depolarization for larger inputs</li>
-<li>Early step toward action potentials</li>
-</ul>
-</div>
-<div id="na-activation-inactivation-m-h" class="section level2">
-<h2>Na Activation + Inactivation (m, h)</h2>
-<p><strong>Script:</strong> <code>active_na_conductance.py</code></p>
-<p><strong>Equations:</strong> <span class="math display">\[
-\frac{dV}{dt} = I_{Na} + I_K + I_{ext} \\
-I_{Na} = g_{Na}^{max} m^3 h (E_{Na} - V) \\
-\frac{dm}{dt} = \frac{m_\infty - m}{\tau_m} \\
-\frac{dh}{dt} = \frac{h_\infty - h}{\tau_h}
-\]</span></p>
-<ul>
-<li>Sodium channels open with <code>m</code> and close with
-<code>h</code></li>
-<li>Enables rise and fall of sodium current</li>
-<li>Brings us closer to real spike dynamics</li>
-</ul>
-</div>
-<div id="active-na-k-conductance" class="section level2">
-<h2>Active Na + K Conductance</h2>
-<p><strong>Script:</strong> <code>active_na_k_conductance.py</code></p>
-<ul>
-<li>Just skip to next slide please</li>
-</ul>
-</div>
-<div id="na-k-with-leak-conductance" class="section level2">
-<h2>Na + K with Leak Conductance</h2>
-<p><strong>Script:</strong>
-<code>active_na_k_leak_conductance.py</code></p>
-<p><strong>Full model:</strong> <span class="math display">\[
-\frac{dV}{dt} = I_{Na} + I_K + I_L + I_{ext} \\
-I_{Na} = g_{Na}^{max} m^3 h (E_{Na} - V) \\
-I_K = g_K^{max} n^4 (E_K - V) \\
-I_L = g_L (E_L - V)
-\]</span></p>
-<ul>
-<li><code>n</code> is the activation gate for potassium</li>
-<li><code>m</code>, <code>h</code>, and <code>n</code> evolve over time
-with voltage</li>
-<li>Produces full action potential with depolarization, repolarization,
-and return to rest</li>
-</ul>
-</div>
+<pre class="python"><code>&quot;&quot;&quot;
+smooth_na_conductance.py
+
+Simulates membrane voltage and Na⁺ conductance using a smooth,
+voltage-gated activation function. Na⁺ conductance increases
+when membrane potential exceeds threshold and decays over time.
+
+Author: Matthew J. Crossley
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import cm
+
+# === Constants ===
+K_in = 140
+K_out = 5
+Na_in = 15
+Na_out = 145
+E_K = 61 * np.log10(K_out / K_in)
+E_Na = 61 * np.log10(Na_out / Na_in)
+g_K = 0.3
+g_Na_max = 1.2  # Max Na conductance
+tau = 10
+
+# === Sigmoid activation function for Na conductance ===
+def sigmoid(V, V_half=-40, slope=6):
+    return 1 / (1 + np.exp(-(V - V_half) / slope))
+
+# === Simulation parameters ===
+T = 300
+dt = 0.1
+t = np.arange(0, T, dt)
+N = len(t)
+
+# === Pulse parameters ===
+pulse_amps = [0.5, 1.0, 2.0, 4.0, 4.5, 4.865, 5]
+colors = cm.Reds(np.linspace(0.4, 0.9, len(pulse_amps)))
+pulse_width = N // 6
+start = N // 3
+end = start + pulse_width
+
+# === Storage ===
+V_traces = []
+I_K_traces = []
+I_Na_traces = []
+g_Na_traces = []
+I_ext_traces = []
+
+# === Run simulation for each pulse amplitude ===
+for amp in pulse_amps:
+    I_ext = np.zeros(N)
+    I_ext[start:end] = amp
+
+    V = np.zeros(N)
+    V[0] = (g_K * E_K + g_Na_max * sigmoid(-65) * E_Na) / (g_K + g_Na_max * sigmoid(-65))
+    I_K = np.zeros(N)
+    I_Na = np.zeros(N)
+    g_Na = np.zeros(N)
+
+    g_Na[0] = g_Na_max * sigmoid(V[0])
+    I_K[0] = g_K * (E_K - V[0])
+    I_Na[0] = g_Na_max * sigmoid(V[0]) * (E_Na - V[0])
+
+    for i in range(1, N):
+        g_Na[i] = g_Na_max * sigmoid(V[i-1])
+        I_K[i] = g_K * (E_K - V[i-1])
+        I_Na[i] = g_Na[i] * (E_Na - V[i-1])
+        dVdt = I_K[i] + I_Na[i] + I_ext[i-1]
+        V[i] = V[i-1] + dVdt * dt
+
+    V_traces.append(V)
+    I_K_traces.append(I_K)
+    I_Na_traces.append(I_Na)
+    g_Na_traces.append(g_Na)
+    I_ext_traces.append(I_ext)
+
+# === Plotting ===
+fig, ax = plt.subplots(5, 1, figsize=(10, 10), sharex=True)
+
+# External input
+for i, I_ext in enumerate(I_ext_traces):
+    ax[0].plot(t, I_ext, label=f&#39;{pulse_amps[i]} mV&#39;, color=colors[i])
+ax[0].set_ylabel(&#39;External Input (mV/ms)&#39;)
+ax[0].set_title(&#39;Input Currents&#39;)
+
+# Membrane potential
+for i, V in enumerate(V_traces):
+    ax[1].plot(t, V, label=f&#39;{pulse_amps[i]} mV&#39;, color=colors[i])
+ax[1].set_ylabel(&#39;Membrane Potential (mV)&#39;)
+ax[1].set_title(&#39;Na⁺ Activation with Smooth Conductance&#39;)
+
+# K⁺ current
+for i, I_K in enumerate(I_K_traces):
+    ax[2].plot(t, I_K, color=colors[i])
+ax[2].set_ylabel(&#39;K⁺ Current (mV/ms)\n(+ outward, - inward)&#39;)
+
+# Na⁺ current
+for i, I_Na in enumerate(I_Na_traces):
+    ax[3].plot(t, I_Na, color=colors[i])
+ax[3].set_ylabel(&#39;Na⁺ Current (mV/ms)\n(+ outward, - inward)&#39;)
+
+# Na⁺ conductance
+for i, g_Na in enumerate(g_Na_traces):
+    ax[4].plot(t, g_Na, color=colors[i])
+ax[4].set_ylabel(&#39;g_Na (mS/cm²)&#39;)
+ax[4].set_xlabel(&#39;Time (ms)&#39;)
+
+ax[0].legend(loc=&#39;upper right&#39;)
+plt.tight_layout()
+plt.show()</code></pre>
 
 
 

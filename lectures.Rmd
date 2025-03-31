@@ -51,12 +51,12 @@ fontsize: 14pt
 ## Models of single neurons
 - Week 6
     - <a href="lectures/week_6/lecture_week_6.html" target="_blank">Conductance-based models working towards HH</a>
-    - <a href="lectures/week_6/passive_dynamics_K.py" target="_blank">Passive dynamics with potassium</a>
-    - <a href="lectures/week_6/passive_two_ion_dynamics.py" target="_blank">Passive dynamics with two ions</a>
-    - <a href="lectures/week_6/smooth_na_conductance.py" target="_blank">Smooth sodium conductance</a>
-    - <a href="lectures/week_6/active_na_conductance.py" target="_blank">Active sodium conductance</a>
-    - <a href="lectures/week_6/active_na_k_conductance.py" target="_blank">Active sodium and potassium conductance</a>
-    - <a href="lectures/week_6/active_na_k_leak_conductance.py" target="_blank">Active sodium, potassium, and leak conductance</a>
+    - <a href="lectures/week_6/passive_dynamics_K.html" target="_blank">Passive dynamics with potassium</a>
+    - <a href="lectures/week_6/passive_two_ion_dynamics.html" target="_blank">Passive dynamics with two ions</a>
+    - <a href="lectures/week_6/smooth_na_conductance.html" target="_blank">Smooth sodium conductance</a>
+    - <a href="lectures/week_6/active_na_conductance.html" target="_blank">Active sodium conductance</a>
+    - <a href="lectures/week_6/active_na_k_conductance.html" target="_blank">Active sodium and potassium conductance</a>
+    - <a href="lectures/week_6/active_na_k_leak_conductance.html" target="_blank">Active sodium, potassium, and leak conductance</a>
 
 - Week 7
 
