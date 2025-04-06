@@ -3198,33 +3198,32 @@ ul.task-list{list-style: none;}
 </article></slide><slide class=""><hgroup><h2>The Izhikevich (Iz) Model</h2></hgroup><article  id="the-izhikevich-iz-model">
 
 <p>\[
-\begin{align}
-\tau_m \frac{d}{dt} v(t) &amp;= k(v(t) - v_r) (v(t) - v_t) - u(t) + I(t) \\
-\frac{d}{dt} u(t) &amp;= a \big(b(v(t) - v_r) - u(t)\big) \\
-\text{ if} &amp;\quad v(t) &gt; v_{\text{peak}} \\
-\text{ then} &amp;\quad v(t) \leftarrow c, \quad u(t) \leftarrow u(t) + d
-\end{align}
+\frac{dv}{dt} = k(v - v_{\text{rest}})(v - v_{\text{thresh}}) - u + I
+\]</p>
+
+<p>\[
+\frac{du}{dt} = a(bv - u)
+\]</p>
+
+<p>\[
+\text{if } v \geq v_{\text{peak}}, \quad
+\begin{cases}
+v \leftarrow c \\\\
+u \leftarrow u + d
+\end{cases}
 \]</p>
 
 </article></slide><slide class=""><hgroup><h2>Iz Parameters</h2></hgroup><article  id="iz-parameters">
 
 <ul>
-<li>\(\tau_m\): Membrane time constant<br/></li>
-<li>\(k\): Curvature of input sensitivity</li>
-<li>\(V_r\): Resting potential</li>
-<li>\(V_t\): Threshold</li>
-<li>\(a, b\): Recovery dynamics</li>
-<li>\(V_{peak}, V_{reset}, d\): Spike/reset rules</li>
-<li>\(I(t)\): Input current</li>
-</ul>
-
-</article></slide><slide class=""><hgroup><h2>Iz Parameters</h2></hgroup><article  id="iz-parameters-1">
-
-<ul>
-<li><p>\(k\): Controls curvature and speed of spiking dynamics</p></li>
-<li><p>\(a\): Controls recovery variable time scale</p></li>
-<li><p>\(b, c, d\): Shape and recovery coupling</p></li>
-<li><p>These parameters are tuned to capture the dynamics of different biological neurons, rather than model their biophysics directly.</p></li>
+<li>\(v\): membrane potential</li>
+<li>\(u\): recovery variable</li>
+<li>\(a, b, c, d\): recovery parameters</li>
+<li>\(k\): curvature of the voltage parabola</li>
+<li>\(v_{\text{rest}}\): resting potential</li>
+<li>\(v_{\text{thresh}}\): threshold potential</li>
+<li>\(v_{\text{peak}}\): spike cutoff/reset threshold</li>
+<li>\(I\): input current</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>Why the Izhikevich Model?</h2></hgroup><article  id="why-the-izhikevich-model">
