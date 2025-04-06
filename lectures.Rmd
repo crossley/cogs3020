@@ -59,6 +59,10 @@ fontsize: 14pt
     - <a href="lectures/week_6/active_na_k_leak_conductance.html" target="_blank">Active sodium, potassium, and leak conductance</a>
 
 - Week 7
+    - <a href="lectures/week_7/lecture_simple_models.html" target="_blank">Simple models of single neurons</a>
+    - <a href="lectures/week_7/simple_models_lif.html" target="_blank">Leaky Integrate-and-Fire model</a>
+    - <a href="lectures/week_7/simple_models_qif.html" target="_blank">Quadratic Integrate-and-Fire model</a>
+    - <a href="lectures/week_7/simple_models_iz.html" target="_blank">Izhikevich model</a>
 
 ## Simple networks and synaptic plasticity
 - Week 8
