@@ -3148,16 +3148,16 @@ ul.task-list{list-style: none;}
 
 <p>\[
 \tau_m \frac{d}{dt} v(t) =  -(v(t) - v_{rest}) + I(t) \\
-\text{if } v(t) = 1, \text{then } v(t) \leftarrow 0
+\text{if } v(t) &gt; v_{thresh}, \text{then } v(t) \leftarrow v_{reset}
 \]</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p>\(\tau_m\): Membrane time constant</p></li>
-<li><p>\(V_{rest}\): Resting potential</p></li>
-<li><p>\(V_{th}\): Spike threshold</p></li>
-<li><p>\(spike\_amp\): Spike amplitude</p></li>
+<li><p>\(v_{rest}\): Resting potential</p></li>
+<li><p>\(v_{thresh}\): Spike threshold</p></li>
+<li><p>\(v_{reset}\): Spike threshold</p></li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>LIF properties</h2></hgroup><article  id="lif-properties">
@@ -3178,17 +3178,17 @@ ul.task-list{list-style: none;}
 
 <p>\[
 \tau_m \frac{d}{dt} v(t) = (v(t) - v_{rest})^2 + I(t) \\
-\text{if } v(t) = v_{\text{peak}},
+\text{if } v(t) &gt; v_{\text{thresh}},
 \text{then } v(t) \leftarrow v_{\text{reset}}
 \]</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li>\(\tau_m\): Membrane time constant<br/></li>
-<li>\(V_{th}\): Spike threshold (set arbitrarily high)<br/></li>
-<li>\(V_{reset}\): Reset voltage after spike<br/></li>
-<li>\(spike\_amp\): Visualization-only spike amplitude</li>
+<li><p>\(\tau_m\): Membrane time constant</p></li>
+<li><p>\(v_{rest}\): Resting potential</p></li>
+<li><p>\(v_{thresh}\): Spike threshold (set arbitrarily high)</p></li>
+<li><p>\(c_{reset}\): Reset voltage after spike</p></li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>QIF Model Simulation</h2></hgroup><article  id="qif-model-simulation">
