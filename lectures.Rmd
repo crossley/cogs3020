@@ -74,7 +74,7 @@ fontsize: 14pt
 ## synaptic plasticity
 - Week 9
     - <a href="lectures/week_09/lecture_hebbian_learning.html" target="_blank">Hebbian learning</a>
-    - <a href="lectures/week_09/demo_simmple_hebb_two_neuron.Rmd" target="_blank">Code: Simple Hebbian learning</a>
+    - <a href="lectures/week_09/demo_simple_hebb_two_neuron.Rmd" target="_blank">Code: Simple Hebbian learning</a>
     - <a href="lectures/week_09/demo_bio_hebb_two_neuron.Rmd" target="_blank">Code: Biologically plausible Hebbian learning</a>
     - <a href="lectures/week_09/demo_stdp_hebb_two_neuron.Rmd" target="_blank">Code: Spike Timing Dependent Plasticity</a>
 
