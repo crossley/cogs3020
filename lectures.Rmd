@@ -66,15 +66,17 @@ fontsize: 14pt
 
 ## Building networks
 - Week 8
-    - <a href="lectures/week_08/lecture_psps.html" target="_blank">Modelling Post-Synaptic Potentials</a>
+    - <a href="lectures/week_08/lecture_psps.html" target="_blank">Modelling Post-synaptic potentials</a>
     - <a href="lectures/week_08/lecture_building_networks.html" target="_blank">Connecting neurons into large networks</a>
     - <a href="lectures/week_08/lecture_basal_ganglia.html" target="_blank">Building a network of the basal ganglia</a>
     - <a href="lectures/week_08/lecture_basal_ganglia.html" target="_blank">Basal Ganglia in code</a>
 
 ## synaptic plasticity
 - Week 9
-  - Hebbian Learning
-  - Hebbian Spike-Timing-Dependent Plasticity (STDP)
+    - <a href="lectures/week_09/lecture_hebbian_learning.html" target="_blank">Hebbian learning</a>
+    - <a href="lectures/week_09/demo_simmple_hebb_two_neuron.Rmd" target="_blank">Code: Simple Hebbian learning</a>
+    - <a href="lectures/week_09/demo_bio_hebb_two_neuron.Rmd" target="_blank">Code: Biologically plausible Hebbian learning</a>
+    - <a href="lectures/week_09/demo_stdp_hebb_two_neuron.Rmd" target="_blank">Code: Spike Timing Dependent Plasticity</a>
 
 - Week 10
   - Reinforcement Learning
