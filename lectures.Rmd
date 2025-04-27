@@ -69,7 +69,7 @@ fontsize: 14pt
     - <a href="lectures/week_08/lecture_psps.html" target="_blank">Modelling Post-synaptic potentials</a>
     - <a href="lectures/week_08/lecture_building_networks.html" target="_blank">Connecting neurons into large networks</a>
     - <a href="lectures/week_08/lecture_basal_ganglia.html" target="_blank">Building a network of the basal ganglia</a>
-    - <a href="lectures/week_08/lecture_basal_ganglia.html" target="_blank">Basal Ganglia in code</a>
+    - <a href="lectures/week_08/basal_ganglia.html" target="_blank">Basal Ganglia in code</a>
 
 ## synaptic plasticity
 - Week 9
