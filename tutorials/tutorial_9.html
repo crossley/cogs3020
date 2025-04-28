@@ -1504,89 +1504,17 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Tutorial 9</h1>
 <h4 class="author">Author: Matthew J. Crossley</h4>
-<h4 class="date">Last update: 31 March, 2025</h4>
+<h4 class="date">Last update: 28 April, 2025</h4>
 
 </div>
 
 
+<div id="work-on-the-problem-sets-and-your-final-project" class="section level2">
+<h2>Work on the problem sets and your final project</h2>
 <ul>
-<li><p>Modify the code from lecture to implement the simple Hebbian
-learning rules covered <a href="https://crossley.github.io/book_comp_neuro/synpatic-plasticity.html#hebbian-stdp">here</a></p></li>
-<li><p>Modify the code from lecture to implement the simple Hebbian
-learning rule defined by Eq. 4.33 and make Fig. 4.1 <a href="https://www.cambridge.org/core/services/aop-cambridge-core/content/view/299C933B1304702ED97382817D7A1B5C/stamped-9781108830676c4_163-217.pdf/mathematical_models_of_human_learning.pdf">here</a></p></li>
-<li><p>Due quiz 9.</p></li>
-<li><p>Here is the code from lecture:</p></li>
+<li>Easier to do when I am there to give you hints / help you.</li>
 </ul>
-<pre class="python"><code>import numpy as np
-import matplotlib.pyplot as plt
-
-# The point of todays lecture is synpatic plasticity.  So
-# lets begin by creating the simplest possible network to
-# play with.
-# A -&gt; B
-# synatpic plasticity is changing the weight of connection
-# between A and B
-
-T = 3000
-tau = 0.1
-t = np.arange(0, T, tau)
-n = t.shape[0]
-
-n_trials = 10
-
-v_A = np.zeros(n)
-g_A = np.zeros(n)
-spike_A = np.zeros(n)
-
-v_B = np.zeros(n)
-g_B = np.zeros(n)
-spike_B = np.zeros(n)
-
-vpeak = 1
-vreset = 0
-
-psp_amp = 1e5
-psp_decay = 1000
-
-# learning rule stuff
-w_AB = 1e-6
-alpha = 1e-18
-
-for trl in range(n_trials):
-    for tt in range(1, n):
-
-        dvdt_A = v_A[tt - 1]**2 + 0.0001
-        dvdt_B = v_B[tt - 1]**2 + w_AB * g_A[tt - 1]
-
-        dt = t[tt] - t[tt - 1]
-
-        v_A[tt] = v_A[tt - 1] + dvdt_A * dt
-        v_B[tt] = v_B[tt - 1] + dvdt_B * dt
-
-        if v_A[tt] &gt; vpeak:
-            v_A[tt] = vreset
-            spike_A[tt] = 1
-
-        if v_B[tt] &gt; vpeak:
-            v_B[tt] = vreset
-            spike_B[tt] = 1
-
-        dgdt_A = (-g_A[tt - 1] + psp_amp * spike_A[tt - 1]) / psp_decay
-        dgdt_B = (-g_B[tt - 1] + psp_amp * spike_B[tt - 1]) / psp_decay
-
-        g_A[tt] = g_A[tt - 1] + dgdt_A * dt
-        g_B[tt] = g_B[tt - 1] + dgdt_B * dt
-
-    # learning happens once per trial
-    # Start with simplest and dumbest possible Hebbian rule
-    pre = np.sum(g_A)
-    post = np.sum(g_B)
-    w_AB = w_AB + alpha * pre * post
-
-    fig, ax = plt.subplots(2, 1, squeeze=False, figsize=(10, 10))
-    ax[0, 0].plot(t, v_A, label=&#39;V_A&#39;)
-    ax[1, 0].plot(t, v_B, label=&#39;B&#39;)
-    plt.show()</code></pre>
+</div>
 
 
 

@@ -3217,7 +3217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 <li><p>Suitable for small networks and if you don’t mind redundancy.</p></li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Brute simple network: \(A -&gt; B -&gt; C\)</h2></hgroup><article  id="brute-simple-network-a---b---c">
+</article></slide><slide class=""><hgroup><h2>Brute simple network: \(A \rightarrow B \rightarrow C\)</h2></hgroup><article  id="brute-simple-network-a-rightarrow-b-rightarrow-c">
 
 <pre class = 'prettyprint lang-python'>w_AB = 0.5 # synaptic weight from A to B
 W_BC = 0.5 # synaptic weight from B to C
@@ -3242,7 +3242,7 @@ for i in range(1, n):
     # Update the state variables...
     # Update spike records...</pre>
 
-</article></slide><slide class=""><hgroup><h2>More elegant simple network: \(A -&gt; B -&gt; C\)</h2></hgroup><article  id="more-elegant-simple-network-a---b---c">
+</article></slide><slide class=""><hgroup><h2>More elegant simple network: \(A \rightarrow B \rightarrow C\)</h2></hgroup><article  id="more-elegant-simple-network-a-rightarrow-b-rightarrow-c">
 
 <pre class = 'prettyprint lang-python'>w = np.zeros((3, 3)) # synaptic weight matrix
 w[0, 1] = 0.5 # synaptic weight from A to B
@@ -3262,7 +3262,7 @@ for i in range(1, n): # iterate over time steps
 
         # Update spike records...</pre>
 
-</article></slide><slide class=""><hgroup><h2>Most elegant using <code>numpy</code>: \(A -&gt; B -&gt; C\)</h2></hgroup><article  id="most-elegant-using-numpy-a---b---c">
+</article></slide><slide class=""><hgroup><h2>Most elegant using <code>numpy</code>: \(A \rightarrow B \rightarrow C\)</h2></hgroup><article  id="most-elegant-using-numpy-a-rightarrow-b-rightarrow-c">
 
 <pre class = 'prettyprint lang-python'>w = np.zeros((3, 3)) # synaptic weight matrix
 w[0, 1] = 0.5 # synaptic weight from A to B
