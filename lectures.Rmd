@@ -83,18 +83,18 @@ fontsize: 14pt
     - <a href="lectures/week_10/demo_rl.html" target="_blank">Code: Reinforcement Learning and Simple Operant Conditioning</a>
 
 - Week 11
-    - Basal Ganglia, Reinforcement Learning and Category Learning
+  - <a href="lectures/week_11/lecture_intro_to_category_learning.pdf" target="_blank">Introduction to Category Learning</a>
+  - <a href="lectures/week_11/lecture_basic_covis_procedural.pdf" target="_blank">A simple model of category learning in the basal ganglia: Overview</a>
+  - <a href="lectures/week_11/basal_ganglia_cat_learn.html" target="_blank">A simple model of category learning in the basal ganglia: Code</a>
+
+
+## Model from the literature
+- Week 12
     - Multiple Systems in Category Learning
     - Large Aspiny Cholinergic Interneurons of the Striatum (TANs)
     - Combining Hebbian Learning in Cortex with Reinforcement Learning in the Striatum
 
-## Model from the literature
-- Week 12
-  - Helpful clues based on tutorial and ilearn questions for
-    your final project
-
 - Week 13
-  - Helpful clues based on tutorial and ilearn questions for
-    your final project
+  - Helpful clues based on tutorial and ilearn questions for your final project
   - Supervised Learning (Maybe)
   - Supervised Learning in the cerebellum (Maybe)
