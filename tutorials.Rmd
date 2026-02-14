@@ -8,13 +8,7 @@ output:
 fontsize: 14pt
 ---
 
-All tutorial material is self-paced. To avoid falling behind,
-you should aim to complete the content by the indicated dates.
-
-## Python programming
-
-Please aim to complete the following tutorials by the end of
-Week 3.
+## Python programming (weeks 1 - 3)
 
 **Basic Python**
 - <a href="tutorials/tutorial_1.html" target="_blank">Tutorial 1</a>
@@ -31,7 +25,7 @@ Week 3.
 The following repository contains code designed to introduce
 the basics of programming behavioural experiments in Python.
 
-`https://github.com/crossley/crossleylab/tree/main/code/behavioural_experiment_progression`
+- <a href="https://github.com/crossley/crossleylab/tree/main/code/behavioural_experiment_progression" target="_blank">Behavioural experiment progression</a>
 
 This sequence progresses from drawing stimuli and handling
 timing and input to implementing state-based control of
@@ -42,12 +36,11 @@ as action selection, category learning, and reaching tasks.
 Advanced examples demonstrate efficient visual stimulus
 generation using NumPy.
 
+---
 
-## Introduction to dynamical systems
+## Introduction to dynamical systems (weeks 4 - 5)
 
-Please aim to complete by the end of Week 5.
-
-`https://github.com/crossley/crossleylab/tree/main/code/electrochemical_signals_progression`
+- <a href="https://github.com/crossley/crossleylab/tree/main/code/electrochemical_signals_progression" target="_blank">Electrochemical signals progression</a>
 
 These scripts progress from numerical integration (Euler’s
 method) to particle-based simulations of diffusion across a
@@ -58,10 +51,11 @@ resting-potential–like signal, providing a visual and
 computational introduction to membrane potentials and
 electrochemical signalling.
 
+---
 
-## Models of single neurons
+## Models of single neurons (weeks 6 - 7)
 
-Please aim to complete by the end of Week 7.
+- <a href="tutorials/tutorial_6.html" target="_blank">Hodgkin–Huxley neuron</a>
 
 Tutorial 6 develops a detailed understanding of the
 Hodgkin–Huxley neuron by implementing the full model,
@@ -75,6 +69,8 @@ trains. The focus is on understanding how cellular
 mechanisms give rise to excitability through simulation and
 parameter exploration.
 
+- <a href="tutorials/tutorial_7.html" target="_blank">Izhikevich neuron</a>
+
 Tutorial 7 moves from biophysically detailed models to
 simpler dynamical neuron models, focusing on the Izhikevich
 and quadratic integrate-and-fire formulations. Students
@@ -85,15 +81,11 @@ neurons. The emphasis is on connecting dynamical systems
 analysis with reduced neuron models used in large-scale
 simulations.
 
-- <a href="tutorials/tutorial_6.html" target="_blank">Tutorial 6</a>
-- <a href="tutorials/tutorial_7.html" target="_blank">Tutorial 7</a>
+---
 
+## Building networks (week 8)
 
-## Building networks
-
-Please aim to complete by the end of Week 8.
-
-`https://github.com/crossley/crossleylab/tree/main/code/basal_ganglia_spiking_network`
+- <a href="https://github.com/crossley/crossleylab/tree/main/code/basal_ganglia_spiking_network" target="_blank">Basal ganglia spiking network</a>
 
 This repository introduces network-level modelling using a
 spiking basal ganglia circuit. The code demonstrates how
@@ -105,29 +97,17 @@ action selection and competition can arise from network
 structure rather than single-neuron behaviour alone.
 
 
-## Synaptic plasticity
+## Synaptic plasticity (weeks 9 - 13)
 
-Please aim to complete by the end of Week 9.
+- <a href="https://github.com/crossley/crossleylab/tree/main/code/basal_ganglia_spiking_network_cat_learn" target="_blank">Basal ganglia spiking network with category learning</a>
 
-This section introduces learning rules that modify synaptic
-strength over time. Hebbian learning is used to illustrate
-how correlations between activity can shape connectivity,
-while reinforcement learning introduces reward-dependent
-plasticity and credit assignment. The goal is to connect
-plasticity mechanisms with changes in network behaviour and
-learning over repeated experience.
-
-
-## Models for your final project
-
-Please aim to complete by the end of Week 13.
-
-`https://github.com/crossley/crossleylab/tree/main/code/basal_ganglia_spiking_network_cat_learn`
-
-This repository combines the earlier components of the
-course into a full computational model that links neural
-dynamics, network interactions, and learning. The model
-demonstrates how basal ganglia circuitry and reinforcement
-learning mechanisms can support procedural category
-learning, providing a reference framework for final
-projects.
+This repository introduces learning rules that modify
+synaptic strength over time, illustrating how Hebbian
+learning shapes connectivity through correlated activity and
+how reinforcement learning introduces reward-dependent
+plasticity and credit assignment. These ideas are integrated
+in a computational model that combines neural dynamics,
+network interactions, and learning within a basal ganglia
+framework, demonstrating how reinforcement-driven plasticity
+can support procedural category learning and providing a
+reference model for final projects.
