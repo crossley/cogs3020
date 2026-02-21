@@ -110,6 +110,7 @@ corticostriatal input efficacy for D1 versus D2 pathways, with
 low, baseline, and high dopamine conditions.
 
 Core lessons:
+
 - The direct pathway facilitates behavioral drive by reducing GPi
   output and releasing thalamocortical activity.
 - The indirect pathway suppresses behavioral drive by increasing
