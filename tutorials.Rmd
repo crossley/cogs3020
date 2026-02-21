@@ -99,14 +99,29 @@ compensated inputs.
 
 - <a href="https://github.com/crossley/crossleylab/tree/main/code/basal_ganglia_spiking_network" target="_blank">Basal ganglia spiking network</a>
 
-This repository introduces network-level modelling using a
-spiking basal ganglia circuit. The code demonstrates how
-single-neuron dynamics extend to interacting populations,
-including excitatory and inhibitory connections, structured
-connectivity, and population-level dynamics emerging from
-local interactions. The emphasis is on understanding how
-action selection and competition can arise from network
-structure rather than single-neuron behaviour alone.
+This repository walks you through a five-step open-loop spiking
+basal ganglia tutorial. You begin with the direct pathway, then
+add the indirect and hyperdirect pathways, so you can see how
+activity propagates from sensory cortex through basal ganglia
+output to thalamus and motor cortex. You then examine reciprocal
+STN-GPe coupling in both stable and high-gain regimes. The final
+lesson introduces dopamine by applying opposite effects to
+corticostriatal input efficacy for D1 versus D2 pathways, with
+low, baseline, and high dopamine conditions.
+
+Core lessons:
+- The direct pathway facilitates behavioral drive by reducing GPi
+  output and releasing thalamocortical activity.
+- The indirect pathway suppresses behavioral drive by increasing
+  inhibitory control over thalamic output.
+- The hyperdirect pathway provides a faster inhibitory "brake"
+  through cortex -> STN -> GPi.
+- The STN-GPe loop regulates overall network gain and stability,
+  helping determine whether activity remains controlled or becomes
+  exaggerated/oscillatory.
+- Dopamine biases action selection by increasing effective
+  corticostriatal influence on D1 pathways while decreasing it on
+  D2 pathways.
 
 
 ## Synaptic plasticity (weeks 9 - 13)
