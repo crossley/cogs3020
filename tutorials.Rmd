@@ -27,6 +27,7 @@ the basics of programming behavioural experiments in Python.
 
 - <a href="https://github.com/crossley/crossleylab/tree/main/code/behavioural_experiment_progression" target="_blank">Behavioural experiment progression</a>
 
+
 This sequence progresses from drawing stimuli and handling
 timing and input to implementing state-based control of
 behaviour. The scripts demonstrate how input, timing, and
@@ -40,8 +41,6 @@ generation using NumPy.
 
 ## Introduction to dynamical systems (weeks 4 - 5)
 
-- <a href="https://github.com/crossley/crossleylab/tree/main/code/electrochemical_signals_progression" target="_blank">Electrochemical signals progression</a>
-
 These scripts progress from numerical integration (Euler’s
 method) to particle-based simulations of diffusion across a
 membrane, adding selective channels and electrical forces to
@@ -50,6 +49,12 @@ ion imbalance across a membrane into a simple
 resting-potential–like signal, providing a visual and
 computational introduction to membrane potentials and
 electrochemical signalling.
+
+Week 4:
+- <a href="https://crossley.github.io/crossleylab/electrochemical-signals/" target="_blank">Electrochemical signals progression: Web-based simulations</a>
+
+Week 5:
+- <a href="https://github.com/crossley/crossleylab/tree/main/code/electrochemical_signals_progression" target="_blank">Electrochemical signals progression: Python implementation</a>
 
 ---
 
