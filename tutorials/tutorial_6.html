@@ -1521,6 +1521,33 @@ Na<span class="math inline">\(^+\)</span> inactivation, K<span class="math inlin
 action-potential-like behaviour</li>
 </ul>
 </div>
+<div id="why-this-tutorial-matters-for-the-final-project" class="section level2">
+<h2>Why this tutorial matters for the final project</h2>
+<p>The final project will not ask you to use the Hodgkin-Huxley model
+directly. Your project neurons will instead be Izhikevich (Iz) or
+quadratic integrate-and-fire (QIF) neurons embedded in a larger
+computational model of category learning and automaticity.</p>
+<p>So why are we doing this tutorial?</p>
+<p>Because this tutorial is really about <strong>how to build and reason
+about a dynamical system</strong>:</p>
+<ul>
+<li>identifying state variables</li>
+<li>identifying inputs</li>
+<li>understanding what pushes the system forward</li>
+<li>understanding what stabilises, shuts down, or resets the system</li>
+<li>seeing how parameter changes alter behaviour over time</li>
+</ul>
+<p>Those are exactly the habits you will need in the final project when
+you explain:</p>
+<ul>
+<li>what your model’s state variables are</li>
+<li>how learning or activation changes over time</li>
+<li>why the model produces a particular behavioural outcome</li>
+<li>how a modelling decision changes the resulting dynamics</li>
+</ul>
+<p>In other words, the specific neuron model will change later, but the
+modelling logic does not.</p>
+</div>
 <div id="general-instructions" class="section level2">
 <h2>General instructions</h2>
 <ul>
@@ -1541,6 +1568,10 @@ sharpen your explanation rather than skipping ahead.</li>
 <h2>1. Passive membrane with potassium only</h2>
 <p>We will begin with the simplest model: a passive membrane with a
 potassium current and an external input.</p>
+<p>This first step is intentionally simple. In final-project terms,
+think of it as practice identifying the minimum ingredients of a
+dynamical model: a state variable, an external input, and a rule that
+determines how the state changes over time.</p>
 <p>The model is:</p>
 <p><span class="math display">\[
 \frac{dV}{dt} = I_{ext}(t) - I_K
@@ -1633,6 +1664,10 @@ plt.show()</code></pre>
 <h2>2. Passive membrane with potassium and sodium</h2>
 <p>Now add a fixed sodium conductance. The membrane is still passive,
 but the resting potential is no longer equal to <span class="math inline">\(E_K\)</span>.</p>
+<p>The important modelling idea here is that behaviour can emerge from
+the balance of multiple influences. That same idea will matter later in
+the final project when different components of a model jointly determine
+what the system does.</p>
 <p>The model is:</p>
 <p><span class="math display">\[
 \frac{dV}{dt} = I_{ext}(t) - (I_K + I_{Na})
@@ -1751,6 +1786,10 @@ depolarization.</p>
 <p>This is not yet a full action potential model. There is still no
 Na<span class="math inline">\(^+\)</span> inactivation and no delayed
 K<span class="math inline">\(^+\)</span> activation.</p>
+<p>This section is especially relevant for the final project because it
+highlights a general principle: once part of a model becomes
+state-dependent, the system can change qualitatively rather than just
+quantitatively.</p>
 <div id="tasks-2" class="section level3">
 <h3>Tasks</h3>
 <ol style="list-style-type: decimal">
@@ -1873,6 +1912,9 @@ g_{Na}(t) = \bar{g}_{Na} m^3 h
 \]</span></p>
 <p>This section is useful for understanding why inward Na<span class="math inline">\(^+\)</span> current can rise and then fall even
 while the input pulse remains present.</p>
+<p>More broadly, this is practice for the final project because it
+forces you to explain the distinct functional roles of multiple state
+variables rather than treating the model as a black box.</p>
 <div id="tasks-3" class="section level3">
 <h3>Tasks</h3>
 <ol style="list-style-type: decimal">
@@ -2042,6 +2084,10 @@ I_x = g_x(V - E_x)
 </ul>
 <p>This is the first model in the sequence that is close to a genuine
 Hodgkin-Huxley action-potential model.</p>
+<p>By this stage, the code should also start to feel more like the kind
+of structured simulation you will need in the final project: multiple
+state variables, coupled update equations, interpretable parameters, and
+outputs that must be explained rather than merely shown.</p>
 <div id="tasks-4" class="section level3">
 <h3>Tasks</h3>
 <ol style="list-style-type: decimal">
@@ -2242,6 +2288,9 @@ above</li>
 <li>the three rows correspond to weak, medium, and strong injected
 input</li>
 </ul>
+<p>This capstone is very close to the kind of reasoning you will need in
+the final project: not just showing that the model does something, but
+explaining why different settings produce different outcomes.</p>
 <div id="tasks-5" class="section level3">
 <h3>Tasks</h3>
 <ol style="list-style-type: decimal">
@@ -2393,6 +2442,26 @@ necessary if we want depolarization to stop?</li>
 <li>Why is delayed K<span class="math inline">\(^+\)</span> activation
 necessary if we want the membrane to repolarize reliably?</li>
 </ol>
+</div>
+<div id="final-project-bridge" class="section level2">
+<h2>Final project bridge</h2>
+<p>This tutorial used Hodgkin-Huxley-style neurons, but the final
+project will use different neuron models. The transfer point is not the
+exact equations. The transfer point is the modelling workflow.</p>
+<p>Before you leave this tutorial, answer the following:</p>
+<ol style="list-style-type: decimal">
+<li>In each section above, what was the main state variable or set of
+state variables?</li>
+<li>What counted as the external input to the system?</li>
+<li>What provided positive feedback or amplification?</li>
+<li>What provided recovery, damping, or stabilisation?</li>
+<li>When you get to the final project, how will you identify the
+analogous pieces in the Iz or QIF based model?</li>
+</ol>
+<p>If you can answer those questions clearly, then this tutorial has
+done its job. The final project will ask you to apply the same style of
+reasoning to a different dynamical system and to explain how that system
+produces behaviour over time.</p>
 </div>
 
 
