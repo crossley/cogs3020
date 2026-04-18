@@ -366,15 +366,15 @@ dt = 0.1
 t = np.arange(0, T, dt)
 n = t.shape[0]
 
-# QIF-like Izhikevich parameters with realistic resting potential
+# set Iz neuron params
 k = 0.04
+a = 0.02
+b = 0.2
 v_r = -65.0
-v_t = -55.0
-v_peak = 30.0
-v_reset = -65.0
-u_reset = 0.0
-a = 0.0
-b = 0.0
+v_t = -50.0
+v_peak = 35.0
+v_reset = -65.0 # Iz uses `c` for this variable sometimes
+u_reset = 8 # Iz uses `d` for this variable sometimes
 
 # Plot setup
 fig, ax = plt.subplots(2, 1, squeeze=False, figsize=(10, 5))
