@@ -86,17 +86,17 @@ neurons. The emphasis is on connecting dynamical systems
 analysis with reduced neuron models used in large-scale
 simulations.
 
-- <a href="https://github.com/crossley/crossleylab/tree/main/code/iz_neurons" target="_blank">Izhikevich neuron code repository</a>
+- <a href="tutorials/izhikevich_neuron_tutorial.html" target="_blank">Guided walkthrough: building Izhikevich neurons from scratch</a>
 
-These scripts progress from a single-variable leaky membrane
-model (Euler updates) to a two-state \(v,u\) system and then
-to the quadratic voltage dynamics used in Izhikevich models.
-Later examples implement the full threshold-reset
-Izhikevich neuron, compare regular-spiking-like and
-fast-spiking-like parameter sets, and conclude with a
-side-by-side comparison of MSN-like and cortical
-pyramidal-like response profiles under matched and
-compensated inputs.
+This guided worksheet progresses from a passive membrane model
+to a two-state \(v,u\) system, then derives the quadratic
+voltage dynamics used in Izhikevich-style neurons. Students
+work through the factored \(k(v-v_r)(v-v_t)\) form, connect
+the threshold-like voltage \(v_t\) to accelerating voltage
+dynamics, implement the full threshold-reset model, compare
+regular-spiking-like and fast-spiking-like parameter sets, and
+finish with a qualitative MSN-like versus cortical
+pyramidal-like comparison.
 
 ---
 
