@@ -1570,9 +1570,55 @@ weakness?</li>
 </div>
 <div id="part-2-biologically-plausible-hebbian-learning" class="section level2">
 <h2>Part 2: Biologically plausible Hebbian learning</h2>
-<p>The biologically plausible rule adds a postsynaptic threshold,
-separate LTP and LTD terms, and factors that keep the weight
-bounded:</p>
+<p>The simple rule above captures “fire together, wire together”, but it
+is too simple for most neural modelling. It has two major problems: it
+only strengthens weights, and weights can grow without limit. The
+biologically plausible rule from lecture adds four ideas that solve
+these problems.</p>
+<p>First, it distinguishes <strong>LTP</strong> from
+<strong>LTD</strong>. LTP means the synapse gets stronger; LTD means the
+synapse gets weaker. The rule uses different learning rates for the two
+processes:</p>
+<ul>
+<li><code>alpha</code> controls how fast LTP happens;</li>
+<li><code>beta</code> controls how fast LTD happens.</li>
+</ul>
+<p>Second, it adds a <strong>postsynaptic threshold</strong>,
+<code>theta</code>. The model asks whether postsynaptic activity is high
+enough to trigger LTP:</p>
+<ul>
+<li>if postsynaptic activity is above <code>theta</code>, the LTP gate
+is on;</li>
+<li>if postsynaptic activity is below <code>theta</code>, the LTD gate
+is on.</li>
+</ul>
+<p>Third, the rule uses a <strong>Heaviside function</strong> as an
+on/off switch. In this tutorial, you can read <code>H[x]</code> as:</p>
+<p><span class="math display">\[
+H[x] =
+\begin{cases}
+0, &amp; x &lt; 0 \\
+1, &amp; x \ge 0
+\end{cases}
+\]</span></p>
+<p>So <code>H[A_j(n) - theta]</code> turns the LTP term on only when
+postsynaptic activity is above threshold. <code>H[theta - A_j(n)]</code>
+turns the LTD term on when postsynaptic activity is below threshold.</p>
+<p>Fourth, the rule uses <strong>exponential scaling terms</strong>.
+These make the amount of plasticity depend smoothly on how far
+postsynaptic activity is above or below threshold. Activity just above
+threshold produces a small LTP effect; activity far above threshold
+produces a larger LTP effect. The parameter <code>lambda</code> controls
+the shape of this scaling.</p>
+<p>Finally, the rule adds <strong>floor and ceiling terms</strong> so
+weights stay in a reasonable range:</p>
+<ul>
+<li><code>(1 - w)</code> slows LTP as the weight approaches its ceiling
+of <code>1</code>;</li>
+<li><code>w</code> slows LTD as the weight approaches its floor of
+<code>0</code>.</li>
+</ul>
+<p>Here is the full rule:</p>
 <p><span class="math display">\[
 \begin{align}
   w&amp;_{ij}(n+1) =  w_{ij}(n) \\
@@ -1584,19 +1630,33 @@ bounded:</p>
      w_{ij}(n).
 \end{align}
 \]</span></p>
-<p>In <code>demo_bio_hebb_two_neuron.py</code>, find the code that
-corresponds to:</p>
+<p>Read it in pieces:</p>
+<ul>
+<li>the first line carries forward the old weight,
+<code>w_ij(n)</code>;</li>
+<li>the <code>+ alpha ...</code> line is the LTP term;</li>
+<li>the <code>- beta ...</code> line is the LTD term;</li>
+<li>the Heaviside terms decide whether LTP or LTD is active;</li>
+<li>the exponential terms scale the size of the change;</li>
+<li><code>[1 - w_ij(n)]</code> and <code>w_ij(n)</code> keep the weight
+bounded.</li>
+</ul>
+<p>Now open <code>demo_bio_hebb_two_neuron.py</code> and find the code
+that corresponds to:</p>
 <ul>
 <li>the LTP learning rate, <code>alpha</code>;</li>
 <li>the LTD learning rate, <code>beta</code>;</li>
 <li>the postsynaptic threshold, <code>theta</code>;</li>
+<li>the Heaviside gates;</li>
 <li>the exponential scaling terms;</li>
-<li>the upper and lower weight bounds.</li>
+<li>the floor and ceiling terms.</li>
 </ul>
 <p>Questions:</p>
 <ol style="list-style-type: decimal">
-<li>What condition triggers LTP?</li>
-<li>What condition triggers LTD?</li>
+<li>What condition turns the LTP gate on?</li>
+<li>What condition turns the LTD gate on?</li>
+<li>What would happen if the exponential scaling terms were removed or
+set to <code>1</code>?</li>
 <li>What role do <code>(1 - w)</code> and <code>w</code> play?</li>
 <li>How is this rule more biologically plausible than the simple
 rule?</li>
