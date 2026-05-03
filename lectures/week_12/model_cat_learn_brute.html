@@ -551,7 +551,11 @@ resp_thresh = 1e10
 #############################
 # BEGIN SIMULATION
 #############################
+progress_every = max(1, (n_trl - 1) // 10)
+
 for trl in range(n_trl - 1):
+    if trl % progress_every == 0 or trl == n_trl - 2:
+        print(f&quot;Trial {trl + 1}/{n_trl - 1}&quot;)
 
     # select stimulus (x, y) by sampling from a uniform distribution in [0, 100]
     x = np.random.uniform(0, 100)
@@ -801,12 +805,11 @@ for trl in range(n_trl - 1):
     post_ltp_1_B = np.heaviside(post_B - theta, 0)
     post_ltd_1_B = np.heaviside(theta - post_B, 0)
 
-    # NOTE: This is a simplifying hack. The biologically plausible Hebbian and RL learning rules we
-    # covered in lecture use an exponential function of post synaptic activity. I originally
-    # included this term, but it was leading to numerical instability. So I just set it to 1 for
-    # now.  For best results on your final project you should try your best ot use what&#39;s reported
-    # in the paper you are assigned. What I do here is just a broad stroke demonstration of some
-    # core ideas.
+    # NOTE: Teaching simplification. The full Hebbian/RL rules from lecture use
+    # exponential functions of postsynaptic activity. In this larger model those
+    # terms can become numerically unstable, so we set the scaling terms to 1
+    # and keep the broad-strokes learning logic. For a final project, use the
+    # rule from the assigned paper where possible and document simplifications.
     post_ltp_2_A = 1
     post_ltd_2_A = 1
 
@@ -836,68 +839,96 @@ for trl in range(n_trl - 1):
             w_vis_msn_B[ii, jj] += dw_B
 
 
-# plot network activity per trial for diagnostic purposes
+# plot network activity for the final trial for diagnostic purposes
 fig, ax = plt.subplots(2, 6, squeeze=False, figsize=(12, 4))
 
 # control space between subplots
 plt.subplots_adjust(wspace=0.5)
 
 ax[0, 0].imshow(vis_act)
+ax[0, 0].set_title(&quot;Visual stimulus&quot;)
+ax[0, 0].set_xlabel(&quot;Visual x unit&quot;)
+ax[0, 0].set_ylabel(&quot;Visual y unit&quot;)
+
 ax[1, 0].imshow(vis_act)
+ax[1, 0].set_title(&quot;Visual stimulus&quot;)
+ax[1, 0].set_xlabel(&quot;Visual x unit&quot;)
+ax[1, 0].set_ylabel(&quot;Visual y unit&quot;)
 
 ax[0, 1].imshow(w_vis_msn_A, vmin=0, vmax=1)
+ax[0, 1].set_title(&quot;Visual-MSN A weights&quot;)
+ax[0, 1].set_xlabel(&quot;Visual x unit&quot;)
+ax[0, 1].set_ylabel(&quot;Visual y unit&quot;)
+
 ax[1, 1].imshow(w_vis_msn_B, vmin=0, vmax=1)
+ax[1, 1].set_title(&quot;Visual-MSN B weights&quot;)
+ax[1, 1].set_xlabel(&quot;Visual x unit&quot;)
+ax[1, 1].set_ylabel(&quot;Visual y unit&quot;)
 
 v = np.array([v_msn_A, v_msn_B, v_gpi_A, v_gpi_B, v_thl_A, v_thl_B,  v_pm_A, v_pm_B])
 g = np.array([g_msn_A, g_msn_B, g_gpi_A, g_gpi_B, g_thl_A, g_thl_B,  g_pm_A, g_pm_B])
+
+def label_trace(voltage_ax, conductance_ax, title):
+    voltage_ax.set_title(title)
+    voltage_ax.set_xlabel(&quot;Time (ms)&quot;)
+    voltage_ax.set_ylabel(&quot;v (mV)&quot;)
+    conductance_ax.set_ylabel(&quot;g&quot;)
 
 axx = ax[0, 2]
 axx.plot(t, v[0, :], label=&#39;str_d1 A&#39;)
 axx2 = axx.twinx()
 axx2.plot(t, g[0, :], color=&#39;C1&#39;)
 ax[0, 2].legend()
+label_trace(axx, axx2, &quot;str_d1 A&quot;)
 
 axx = ax[1, 2]
 axx.plot(t, v[1, :], label=&#39;str_d1 B&#39;)
 axx2 = axx.twinx()
 axx2.plot(t, g[1, :], color=&#39;C1&#39;)
 ax[1, 2].legend()
+label_trace(axx, axx2, &quot;str_d1 B&quot;)
 
 axx = ax[0, 3]
 axx.plot(t, v[2, :], label=&#39;gpi A&#39;)
 axx2 = axx.twinx()
 axx2.plot(t, g[2, :], color=&#39;C1&#39;)
 ax[0, 3].legend()
+label_trace(axx, axx2, &quot;gpi A&quot;)
 
 axx = ax[1, 3]
 axx.plot(t, v[3, :], label=&#39;gpi B&#39;)
 axx2 = axx.twinx()
 axx2.plot(t, g[3, :], color=&#39;C1&#39;)
 ax[1, 3].legend()
+label_trace(axx, axx2, &quot;gpi B&quot;)
 
 axx = ax[0, 4]
 axx.plot(t, v[4, :], label=&#39;thl A&#39;)
 axx2 = axx.twinx()
 axx2.plot(t, g[4, :], color=&#39;C1&#39;)
 ax[0, 4].legend()
+label_trace(axx, axx2, &quot;thl A&quot;)
 
 axx = ax[1, 4]
 axx.plot(t, v[5, :], label=&#39;thl B&#39;)
 axx2 = axx.twinx()
 axx2.plot(t, g[5, :], color=&#39;C1&#39;)
 ax[1, 4].legend()
+label_trace(axx, axx2, &quot;thl B&quot;)
 
 axx = ax[0, 5]
 axx.plot(t, v[6, :], label=&#39;ctx A&#39;)
 axx2 = axx.twinx()
 axx2.plot(t, g[6, :], color=&#39;C1&#39;)
 ax[0, 5].legend()
+label_trace(axx, axx2, &quot;ctx A / premotor A&quot;)
 
 axx = ax[1, 5]
 axx.plot(t, v[7, :], label=&#39;ctx B&#39;)
 axx2 = axx.twinx()
 axx2.plot(t, g[7, :], color=&#39;C1&#39;)
 ax[1, 5].legend()
+label_trace(axx, axx2, &quot;ctx B / premotor B&quot;)
 
 plt.show()
 
@@ -906,6 +937,9 @@ fig, ax = plt.subplots(1, 1, squeeze=False, figsize=(10, 10))
 ax[0, 0].plot(np.arange(0, n_trl-1), r[:-1], color=&#39;C0&#39;, label=&#39;Obtained Reward&#39;)
 ax[0, 0].plot(np.arange(0, n_trl-1), p[:-1], color=&#39;C1&#39;, label=&#39;Predicted Reward&#39;)
 ax[0, 0].plot(np.arange(0, n_trl-1), rpe[:-1], color=&#39;C2&#39;, label=&#39;RPE&#39;)
+ax[0, 0].set_xlabel(&quot;Trial&quot;)
+ax[0, 0].set_ylabel(&quot;Value&quot;)
+ax[0, 0].set_title(&quot;Learning across trials&quot;)
 ax[0, 0].legend()
 plt.show()</code></pre>
 
