@@ -12,7 +12,7 @@
 <meta name="author" content="Author: Matthew J. Crossley" />
 
 
-<title>Tutorial 9</title>
+<title>Tutorial 10</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1502,245 +1502,622 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Tutorial 9</h1>
+<h1 class="title toc-ignore">Tutorial 10</h1>
 <h4 class="author">Author: Matthew J. Crossley</h4>
 <h4 class="date">Last update: 10 May, 2026</h4>
 
 </div>
 
 
+<div id="work-on-the-problem-sets-and-your-final-project" class="section level2">
+<h2>Work on the problem sets and your final project</h2>
+<p>You can work on the problem sets and final project after you have
+worked through the Week 10 activity below. The point of the activity is
+to make the reinforcement-learning part of the category-learning model
+explicit.</p>
+</div>
 <div id="tutorial-goals" class="section level2">
 <h2>Tutorial goals</h2>
-<p>This week is about <strong>Hebbian learning</strong>: synaptic change
-driven by presynaptic and postsynaptic activity. By the end of the
-tutorial, you should be able to:</p>
+<p>Last week we focused on <strong>two-factor Hebbian learning</strong>,
+where synaptic change is driven by presynaptic and postsynaptic
+activity. This week adds a third factor, which is a dopamine-like
+<strong>reward prediction error</strong>.</p>
+<p>By the end of the tutorial, you should be able to:</p>
 <ul>
-<li>identify the two activity factors in a Hebbian learning rule;</li>
-<li>explain the difference between simple Hebbian learning and a bounded
-biologically plausible Hebbian rule;</li>
-<li>map the Week 9 equations onto the cortical-cortical pathway in
-SPEED;</li>
-<li>identify what is deliberately simplified in the demonstration
-code.</li>
+<li>explain why reinforcement learning is a three-factor learning
+rule;</li>
+<li>identify reward, predicted reward, and reward prediction error in
+code;</li>
+<li>map the three factors onto visual-to-MSN cortico-striatal
+plasticity;</li>
+<li>explain why positive and negative reward prediction errors have
+different effects on active cortico-striatal weights;</li>
+<li>connect the Week 10 reinforcement-learning lecture to the
+basal-ganglia category-learning model used for final projects.</li>
 </ul>
-<p>Week 10 will cover reinforcement learning and three-factor learning
-at cortico-striatal synapses. That means <code>model_cat_learn.py</code>
-and the visual-to-MSN part of SPEED are useful to know about now, but
-they are not the main Week 9 target.</p>
 </div>
 <div id="setup" class="section level2">
 <h2>Setup</h2>
-<p>Open the Week 9 Python demos while you work:</p>
+<p>Open these files while you work:</p>
 <ul>
-<li><code>../lectures/week_09/demo_simple_hebb_two_neuron.py</code></li>
-<li><code>../lectures/week_09/demo_bio_hebb_two_neuron.py</code></li>
-<li>optional:
-<code>../lectures/week_09/demo_stdp_hebb_two_neuron.py</code></li>
+<li><code>../lectures/week_10/demo_rl.py</code></li>
+<li><code>../code/model_cat_learn.py</code></li>
+<li>optional: <code>../lectures/week_12/model_speed_brute.py</code></li>
 </ul>
-<p>The lecture demos save animations with <code>ffmpeg</code>. If
-<code>ffmpeg</code> is not working on your machine, do not spend the
-whole tutorial debugging it. The important part for today is the
-learning rule and the static plots. You can still read and run the code
-up to the plotting stage.</p>
+<p>The course website links to the basal-ganglia spiking
+category-learning repository for this part of the course. The local
+files above contain the same teaching target in a compact form: a visual
+stimulus drives medium spiny neurons (MSNs), the basal ganglia selects a
+response, and feedback modifies visual-to-MSN weights through a
+reinforcement-learning rule.</p>
+<p>If the full simulations are slow on your machine, reduce the problem
+before you wait too long. You can lower the number of trials, shorten
+the duration of each trial, increase <code>dt</code> so the simulation
+uses fewer time steps, or reduce the number of repeated simulations if
+you are averaging across runs. As you do this, start thinking about
+where the bottlenecks are. Nested loops over trials, time steps, and
+visual units are good places to look. You are free to improve the code
+if you want, as long as you understand what your changes preserve and
+what they simplify.</p>
 </div>
-<div id="part-1-simple-hebbian-learning" class="section level2">
-<h2>Part 1: Simple Hebbian learning</h2>
-<p>The simplest Hebbian learning rule from lecture is:</p>
+<div id="part-1-from-hebbian-learning-to-reinforcement-learning" class="section level2">
+<h2>Part 1: From Hebbian learning to reinforcement learning</h2>
+<p>The Week 9 Hebbian idea was:</p>
 <p><span class="math display">\[
-w_{ij}(n+1) = w_{ij}(n) + \eta A_i(n)A_j(n)
+\Delta w \propto \text{presynaptic activity} \times
+\text{postsynaptic activity}.
 \]</span></p>
-<p>In <code>demo_simple_hebb_two_neuron.py</code>, find the lines that
-compute:</p>
+<p>This is a <strong>two-factor</strong> rule. A synapse changes when
+both sides of the synapse are active.</p>
+<p>Reinforcement learning adds a third factor:</p>
+<p><span class="math display">\[
+\Delta w \propto \text{presynaptic activity} \times
+\text{postsynaptic activity} \times
+\text{reward prediction error}.
+\]</span></p>
+<p>The reward prediction error is:</p>
+<p><span class="math display">\[
+\delta = R - V
+\]</span></p>
+<p>where:</p>
 <ul>
-<li>the presynaptic activity;</li>
-<li>the postsynaptic activity;</li>
-<li>the learning rate;</li>
-<li>the new value of the synaptic weight.</li>
+<li><span class="math inline">\(R\)</span> is the reward that was
+actually obtained;</li>
+<li><span class="math inline">\(V\)</span> is the predicted reward;</li>
+<li><span class="math inline">\(\delta\)</span> is the reward prediction
+error.</li>
 </ul>
 <p>Questions:</p>
 <ol style="list-style-type: decimal">
-<li>Which variable is the presynaptic activity?</li>
-<li>Which variable is the postsynaptic activity?</li>
-<li>What happens to the weight when both neurons are active?</li>
-<li>Why can this rule produce LTP but not LTD?</li>
-<li>Why does the lecture describe unbounded weight growth as a
-weakness?</li>
+<li>Why is ordinary Hebbian learning not enough for trial-and-error
+category learning?</li>
+<li>What information does the reward prediction error provide that pre-
+and postsynaptic activity do not provide?</li>
+<li>In words, what does it mean if <span class="math inline">\(\delta
+&gt; 0\)</span>?</li>
+<li>In words, what does it mean if <span class="math inline">\(\delta
+&lt; 0\)</span>?</li>
+<li>Why is dopamine often described as a teaching signal in this
+context?</li>
 </ol>
-</div>
-<div id="part-2-biologically-plausible-hebbian-learning" class="section level2">
-<h2>Part 2: Biologically plausible Hebbian learning</h2>
-<p>The simple rule above captures “fire together, wire together”, but it
-is too simple for most neural modelling. It has two major problems: it
-only strengthens weights, and weights can grow without limit. The
-biologically plausible rule from lecture adds four ideas that solve
-these problems.</p>
-<p>First, it distinguishes <strong>LTP</strong> from
-<strong>LTD</strong>. LTP means the synapse gets stronger; LTD means the
-synapse gets weaker. The rule uses different learning rates for the two
-processes:</p>
-<ul>
-<li><code>alpha</code> controls how fast LTP happens;</li>
-<li><code>beta</code> controls how fast LTD happens.</li>
-</ul>
-<p>Second, it adds a <strong>postsynaptic threshold</strong>,
-<code>theta</code>. The model asks whether postsynaptic activity is high
-enough to trigger LTP:</p>
-<ul>
-<li>if postsynaptic activity is above <code>theta</code>, the LTP gate
-is on;</li>
-<li>if postsynaptic activity is below <code>theta</code>, the LTD gate
-is on.</li>
-</ul>
-<p>Third, the rule uses a <strong>Heaviside function</strong> as an
-on/off switch. In this tutorial, you can read <code>H[x]</code> as:</p>
-<p><span class="math display">\[
-H[x] =
-\begin{cases}
-0, &amp; x &lt; 0 \\
-1, &amp; x \ge 0
-\end{cases}
-\]</span></p>
-<p>So <code>H[A_j(n) - theta]</code> turns the LTP term on only when
-postsynaptic activity is above threshold. <code>H[theta - A_j(n)]</code>
-turns the LTD term on when postsynaptic activity is below threshold.</p>
-<p>Fourth, the rule uses <strong>exponential scaling terms</strong>.
-These make the amount of plasticity depend smoothly on how far
-postsynaptic activity is above or below threshold. Activity just above
-threshold produces a small LTP effect; activity far above threshold
-produces a larger LTP effect. The parameter <code>lambda</code> controls
-the shape of this scaling.</p>
-<p>Finally, the rule adds <strong>floor and ceiling terms</strong> so
-weights stay in a reasonable range:</p>
-<ul>
-<li><code>(1 - w)</code> slows LTP as the weight approaches its ceiling
-of <code>1</code>;</li>
-<li><code>w</code> slows LTD as the weight approaches its floor of
-<code>0</code>.</li>
-</ul>
-<p>Here is the full rule:</p>
-<p><span class="math display">\[
-\begin{align}
-  w&amp;_{ij}(n+1) =  w_{ij}(n) \\
-   &amp;+ \alpha H[A_j(n) - \theta] A_i(n)
-     \left\{1- \mathrm{e}^{-\lambda [A_j(n) - \theta]}\right\}
-     [1 - w_{ij}(n)] \\
-   &amp;- \beta H[\theta - A_j(n)] A_i(n)
-     \left\{\mathrm{e}^{-\lambda [\theta - A_j(n)]}\right\}
-     w_{ij}(n).
-\end{align}
-\]</span></p>
-<p>Read it in pieces:</p>
-<ul>
-<li>the first line carries forward the old weight,
-<code>w_ij(n)</code>;</li>
-<li>the <code>+ alpha ...</code> line is the LTP term;</li>
-<li>the <code>- beta ...</code> line is the LTD term;</li>
-<li>the Heaviside terms decide whether LTP or LTD is active;</li>
-<li>the exponential terms scale the size of the change;</li>
-<li><code>[1 - w_ij(n)]</code> and <code>w_ij(n)</code> keep the weight
-bounded.</li>
-</ul>
-<p>Now open <code>demo_bio_hebb_two_neuron.py</code> and find the code
-that corresponds to:</p>
-<ul>
-<li>the LTP learning rate, <code>alpha</code>;</li>
-<li>the LTD learning rate, <code>beta</code>;</li>
-<li>the postsynaptic threshold, <code>theta</code>;</li>
-<li>the Heaviside gates;</li>
-<li>the exponential scaling terms;</li>
-<li>the floor and ceiling terms.</li>
-</ul>
-<p>Questions:</p>
+<details>
+<summary>
+Answers
+</summary>
 <ol style="list-style-type: decimal">
-<li>What condition turns the LTP gate on?</li>
-<li>What condition turns the LTD gate on?</li>
-<li>What would happen if the exponential scaling terms were removed or
-set to <code>1</code>?</li>
-<li>What role do <code>(1 - w)</code> and <code>w</code> play?</li>
-<li>How is this rule more biologically plausible than the simple
-rule?</li>
+<li>Ordinary Hebbian learning can strengthen connections when two units
+are active together, but it does not know whether the resulting action
+was good or bad.</li>
+<li>The reward prediction error says whether the outcome was better or
+worse than expected.</li>
+<li>If <span class="math inline">\(\delta &gt; 0\)</span>, the outcome
+was better than expected.</li>
+<li>If <span class="math inline">\(\delta &lt; 0\)</span>, the outcome
+was worse than expected.</li>
+<li>Dopamine is described as a teaching signal because dopamine neuron
+firing patterns reflect reward prediction errors, and because dopamine
+can modulate plasticity at active synapses.</li>
 </ol>
+</details>
 </div>
-<div id="part-3-speed-as-the-final-project-bridge" class="section level2">
-<h2>Part 3: SPEED as the final-project bridge</h2>
-<p>Some final projects use SPEED. SPEED has two learning systems:</p>
-<ul>
-<li>cortical-cortical visual-to-premotor weights, learned by a
-two-factor Hebbian rule;</li>
-<li>cortico-striatal visual-to-MSN weights, learned by a three-factor
-reinforcement learning rule.</li>
-</ul>
-<p>For Week 9, focus only on the cortical-cortical part in
-<code>../lectures/week_12/model_speed_brute.py</code>:</p>
-<pre class="python"><code># cortical pathway
-w_vis_pm_A = np.random.uniform(0.2, 0.4, (vis_dim, vis_dim))
-w_vis_pm_B = np.random.uniform(0.2, 0.4, (vis_dim, vis_dim))
+<div id="part-2-reward-prediction-error-in-the-simple-week-10-demo" class="section level2">
+<h2>Part 2: Reward prediction error in the simple Week 10 demo</h2>
+<p>Open <code>../lectures/week_10/demo_rl.py</code>.</p>
+<p>Find the section that defines the critic variables:</p>
+<pre class="python"><code>response = np.zeros(N)
+r_obtained = np.zeros(N)
+r_predicted = np.zeros(N)
+delta = np.zeros(N)</code></pre>
+<p>Then find the lines that compute the reward prediction error and
+update the reward prediction:</p>
+<pre class="python"><code>delta[trl] = r_obtained[trl] - r_predicted[trl]
 
-# cortical-cortical learning rates
-alpha_w_2 = 2e-2
-beta_w_2 = 2e-2</code></pre>
-<p>Later in the script, find the section headed:</p>
-<pre class="python"><code># Update visual-pm weights via 2-factor Hebbian rule</code></pre>
-<p>Map the code onto the Week 9 rule:</p>
+alpha_pr = 0.05
+r_predicted[trl+1] = r_predicted[trl] + alpha_pr * (
+    r_obtained[trl] - r_predicted[trl]
+)</code></pre>
+<p>Questions:</p>
+<ol style="list-style-type: decimal">
+<li>Which variable corresponds to <span class="math inline">\(R\)</span>?</li>
+<li>Which variable corresponds to <span class="math inline">\(V\)</span>?</li>
+<li>Which variable corresponds to <span class="math inline">\(\delta\)</span>?</li>
+<li>What does <code>alpha_pr</code> control?</li>
+<li>Why does the prediction change gradually rather than jumping all the
+way to the latest reward?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li><code>r_obtained</code> corresponds to <span class="math inline">\(R\)</span>.</li>
+<li><code>r_predicted</code> corresponds to <span class="math inline">\(V\)</span>.</li>
+<li><code>delta</code> corresponds to <span class="math inline">\(\delta\)</span>.</li>
+<li><code>alpha_pr</code> is the learning rate for the critic.</li>
+<li>A gradual update lets the model track recent reward history without
+treating the last outcome as the whole truth.</li>
+</ol>
+</details>
+<p>Now look at the reward schedule:</p>
+<pre class="python"><code>if response[trl] == 1:
+    r_obtained[trl] = 1.0
+else:
+    r_obtained[trl] = 0.0
+
+if trl &gt; N//2:
+    r_obtained[trl] = 0.0</code></pre>
+<p>The last two lines create an <strong>extinction phase</strong>.
+During extinction, the previously rewarded response stops producing
+reward. Extinction is included here because it is a common experimental
+paradigm in the animal conditioning literature. It gives the model a
+simple version of a task where a learned response first becomes useful
+and then stops being useful.</p>
+<p>Questions:</p>
+<ol style="list-style-type: decimal">
+<li>What response is rewarded during the first half of training?</li>
+<li>What changes during the extinction phase?</li>
+<li>What should happen to <code>delta</code> when reward is suddenly
+removed?</li>
+<li>What should happen to the synaptic weight during extinction?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li>During the first half of training, response <code>1</code> is
+rewarded.</li>
+<li>After <code>trl &gt; N//2</code>, reward is set to zero regardless
+of the response.</li>
+<li>If the model still predicts reward when reward is removed,
+<code>delta</code> should become negative.</li>
+<li>The active synaptic weight should weaken because the selected action
+is now worse than expected.</li>
+</ol>
+</details>
+</div>
+<div id="part-3-the-three-factors-in-the-simple-demo" class="section level2">
+<h2>Part 3: The three factors in the simple demo</h2>
+<p>In <code>demo_rl.py</code>, find the weight-update section:</p>
+<pre class="python"><code>pre = g_A[trl, :].sum()
+post = g_B[trl, :].sum()</code></pre>
+<p>These two lines compute the first two factors:</p>
 <ul>
-<li><code>pre = vis_act[ii, jj]</code> is visual cortical activity;</li>
-<li><code>post_A = g_pm_A.sum()</code> and
-<code>post_B = g_pm_B.sum()</code> are premotor activity;</li>
-<li><code>dw_1A</code> and <code>dw_1B</code> are LTP terms;</li>
-<li><code>dw_2A</code> and <code>dw_2B</code> are LTD terms;</li>
-<li><code>w_vis_pm_A</code> and <code>w_vis_pm_B</code> are the
-cortical-cortical weights.</li>
+<li><code>pre</code> is presynaptic activity from neuron A;</li>
+<li><code>post</code> is postsynaptic activity from neuron B.</li>
+</ul>
+<p>Now find the code that uses <code>delta[trl]</code>:</p>
+<pre class="python"><code>if delta[trl] &gt; 0:
+    delta_w += alpha * pre * post_ltp_1 * post_ltp_2 * (
+        1 - w[trl]
+    ) * delta[trl]
+else:
+    delta_w -= alpha * pre * post_ltp_1 * post_ltp_2 * (
+        w[trl]
+    ) * np.abs(delta[trl])</code></pre>
+<p>Questions:</p>
+<ol style="list-style-type: decimal">
+<li>What are the three factors in this update rule?</li>
+<li>Why does a positive <code>delta[trl]</code> strengthen the active
+connection?</li>
+<li>Why does a negative <code>delta[trl]</code> weaken the active
+connection?</li>
+<li>What roles do <code>(1 - w[trl])</code> and <code>w[trl]</code>
+play?</li>
+<li>What would happen if the reward prediction error term were
+removed?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li>The three factors are presynaptic activity, postsynaptic activity,
+and reward prediction error. In this code those are <code>pre</code>,
+the postsynaptic threshold terms based on <code>post</code>, and
+<code>delta[trl]</code>.</li>
+<li>A positive prediction error strengthens the active connection
+because the selected response produced a better-than-expected
+outcome.</li>
+<li>A negative prediction error weakens the active connection because
+the selected response produced a worse-than-expected outcome.</li>
+<li><code>(1 - w[trl])</code> slows strengthening as the weight
+approaches its upper bound. <code>w[trl]</code> slows weakening as the
+weight approaches its lower bound.</li>
+<li>Without the prediction-error term, the rule would no longer
+distinguish rewarded from unrewarded actions.</li>
+</ol>
+</details>
+</div>
+<div id="part-4-category-learning-as-cortico-striatal-reinforcement-learning" class="section level2">
+<h2>Part 4: Category learning as cortico-striatal reinforcement
+learning</h2>
+<p>Now open <code>../code/model_cat_learn.py</code>.</p>
+<p>This model is more complicated than the two-cell demo, but the
+learning logic is the same. The model presents a stimulus, selects a
+category response, receives feedback, computes a reward prediction
+error, and updates visual-to-MSN weights.</p>
+<p>Find the category rule:</p>
+<pre class="python"><code>if x &gt; y:
+    cat[trl] = 1
+else:
+    cat[trl] = 2</code></pre>
+<p>Questions:</p>
+<ol style="list-style-type: decimal">
+<li>What stimulus dimensions define the category boundary?</li>
+<li>Which category is correct when <code>x &gt; y</code>?</li>
+<li>Which category is correct when <code>x &lt;= y</code>?</li>
+<li>Why is this a trial-and-error learning problem for the model?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li>The category boundary is defined by the relation between the
+stimulus coordinates <code>x</code> and <code>y</code>.</li>
+<li>Category <code>1</code> is correct when <code>x &gt; y</code>.</li>
+<li>Category <code>2</code> is correct when <code>x &lt;= y</code>.</li>
+<li>It is a trial-and-error learning problem because the model has to
+learn which response is correct for different regions of stimulus space
+from feedback over many trials.</li>
+</ol>
+</details>
+<p>Now find the response and feedback section:</p>
+<pre class="python"><code>if cat[trl] == resp[trl]:
+    r[trl] = 1
+else:
+    r[trl] = 0</code></pre>
+<p>Questions:</p>
+<ol style="list-style-type: decimal">
+<li>What does <code>resp[trl]</code> represent?</li>
+<li>What does <code>r[trl]</code> represent?</li>
+<li>What is the obtained reward after a correct response?</li>
+<li>What is the obtained reward after an incorrect response?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li><code>resp[trl]</code> is the response selected by the model on the
+current trial.</li>
+<li><code>r[trl]</code> is the obtained reward.</li>
+<li>A correct response receives reward <code>1</code>.</li>
+<li>An incorrect response receives reward <code>0</code>.</li>
+</ol>
+</details>
+</div>
+<div id="part-5-the-critic-in-the-category-learning-model" class="section level2">
+<h2>Part 5: The critic in the category-learning model</h2>
+<p>In <code>model_cat_learn.py</code>, find:</p>
+<pre class="python"><code>rpe[trl] = r[trl] - p[trl]
+
+p[trl + 1] = p[trl] + alpha_critic * rpe[trl]</code></pre>
+<p>This is the same prediction-error logic as the simple demo, but the
+variable names are shorter:</p>
+<ul>
+<li><code>r</code> is obtained reward;</li>
+<li><code>p</code> is predicted reward;</li>
+<li><code>rpe</code> is reward prediction error.</li>
 </ul>
 <p>Questions:</p>
 <ol style="list-style-type: decimal">
-<li>What is the presynaptic population in this part of SPEED?</li>
-<li>What is the postsynaptic population?</li>
-<li>Which lines implement LTP?</li>
-<li>Which lines implement LTD?</li>
-<li>Why is this part of SPEED a Week 9 topic, while visual-to-MSN
-learning is a Week 10 topic?</li>
+<li>Which line computes the reward prediction error?</li>
+<li>Which line updates the predicted reward?</li>
+<li>What does <code>alpha_critic</code> control?</li>
+<li>Early in learning, why might a correct response produce a large
+positive <code>rpe</code>?</li>
+<li>Later in learning, why might the same correct response produce a
+smaller <code>rpe</code>?</li>
 </ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li><code>rpe[trl] = r[trl] - p[trl]</code> computes the reward
+prediction error.</li>
+<li><code>p[trl + 1] = p[trl] + alpha_critic * rpe[trl]</code> updates
+the predicted reward.</li>
+<li><code>alpha_critic</code> controls how quickly the prediction
+changes.</li>
+<li>Early in learning, predicted reward may be low, so a correct
+response can be much better than expected.</li>
+<li>Later, the model predicts reward more accurately, so the same
+correct response can produce a smaller prediction error.</li>
+</ol>
+</details>
 </div>
-<div id="part-4-the-simplifying-hack" class="section level2">
-<h2>Part 4: The simplifying hack</h2>
-<p>You will see comments in the SPEED and category-learning scripts that
-refer to a simplifying hack. This is not a new biological mechanism. It
-means the full lecture rule contains exponential functions of
-postsynaptic activity, but those terms can become numerically unstable
-in the larger category-learning simulations. For the broad-strokes
-teaching model, the scripts set the exponential scaling terms to
-<code>1</code>.</p>
-<p>That simplification keeps the core logic:</p>
+<div id="part-6-visual-to-msn-weights-in-the-category-learning-model" class="section level2">
+<h2>Part 6: Visual-to-MSN weights in the category-learning model</h2>
+<p>Find the section headed:</p>
+<pre class="python"><code># Update visual-msn weights vs 3-factor RL rule</code></pre>
+<p>This section is where the Week 10 reinforcement-learning idea appears
+inside the category-learning model.</p>
+<p>The first two factors are:</p>
+<pre class="python"><code>pre = vis_act.flatten()
+post = g[(0, 4), :].sum(axis=1)</code></pre>
+<p>Read these as:</p>
 <ul>
-<li>active pre and post neurons can strengthen a connection;</li>
-<li>weak postsynaptic activity can weaken a connection when that term is
-included;</li>
-<li>weights are bounded by factors such as <code>(1 - w)</code> and
-<code>w</code>.</li>
+<li><code>pre</code> is visual cortical activity;</li>
+<li><code>post[0]</code> is activity of the category-A MSN;</li>
+<li><code>post[1]</code> is activity of the category-B MSN.</li>
 </ul>
-<p>It removes the graded exponential dependence on postsynaptic
-activity. For a final project, use the learning rule from the assigned
-paper where possible, and document any simplification you make.</p>
+<p>The indexing is a little compact. The model stores all neuron
+conductance traces in the array <code>g</code>. The first dimension
+indexes neurons and the second dimension indexes time. The expression
+<code>g[(0, 4), :]</code> selects neurons <code>0</code> and
+<code>4</code> across all time points. Those two neurons are the
+direct-pathway MSNs for the two response channels. The
+<code>.sum(axis=1)</code> part then adds activity over time for each
+selected neuron. After that sum, <code>post[0]</code> is the activity of
+neuron <code>0</code>, the category-A MSN, and <code>post[1]</code> is
+the activity of neuron <code>4</code>, the category-B MSN.</p>
+<p>The third factor is:</p>
+<pre class="python"><code>rpe[trl]</code></pre>
+<p>Questions:</p>
+<ol style="list-style-type: decimal">
+<li>What is the presynaptic population in this learning rule?</li>
+<li>What is the postsynaptic population?</li>
+<li>What is the reinforcement signal?</li>
+<li>Why is this a cortico-striatal learning rule?</li>
+<li>Why is this a Week 10 topic rather than a Week 9 topic?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li>The presynaptic population is the visual representation in
+<code>vis_act</code>.</li>
+<li>The postsynaptic population is the pair of MSNs selected by
+<code>g[(0, 4), :]</code>. After summing over time, <code>post[0]</code>
+stores activity from neuron <code>0</code> and <code>post[1]</code>
+stores activity from neuron <code>4</code>.</li>
+<li>The reinforcement signal is <code>rpe[trl]</code>.</li>
+<li>This is a cortico-striatal rule because visual cortical activity
+modifies weights onto striatal MSNs.</li>
+<li>It belongs in Week 10 because the update depends on reward
+prediction error, not just pre- and postsynaptic activity.</li>
+</ol>
+</details>
 </div>
-<div id="week-10-preview" class="section level2">
-<h2>Week 10 preview</h2>
-<p>Next week, the same basic Hebbian idea gets a third factor: reward
-prediction error. That is why Week 10 will focus on:</p>
+<div id="part-7-action-selection-and-credit-assignment" class="section level2">
+<h2>Part 7: Action selection and credit assignment</h2>
+<p>The model includes a simplifying hard-inhibition step:</p>
+<pre class="python"><code>if resp[trl] == 1:
+    post[1] = 0
+elif resp[trl] == 2:
+    post[0] = 0</code></pre>
+<p>This means that the model mainly updates the MSN pathway associated
+with the response that was selected.</p>
+<p>Questions:</p>
+<ol style="list-style-type: decimal">
+<li>If the model chooses response A, which MSN pathway is allowed to
+have postsynaptic activity?</li>
+<li>If the model chooses response B, which MSN pathway is allowed to
+have postsynaptic activity?</li>
+<li>Why is this useful for credit assignment?</li>
+<li>What would go wrong if both response pathways were strengthened
+after every reward?</li>
+<li>How does this relate to the idea that dopamine is a global signal
+but plasticity is still synapse-specific?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li>If the model chooses response A, the B pathway is set to zero and
+the A pathway can receive credit.</li>
+<li>If the model chooses response B, the A pathway is set to zero and
+the B pathway can receive credit.</li>
+<li>This helps with credit assignment because the model mostly updates
+the pathway that actually contributed to the response.</li>
+<li>If both pathways were strengthened after every reward, the model
+would learn less clearly which action was responsible for success.</li>
+<li>Dopamine can be broad, but plasticity still depends on which
+synapses were active at the same time.</li>
+</ol>
+</details>
+</div>
+<div id="part-8-positive-and-negative-reward-prediction-errors" class="section level2">
+<h2>Part 8: Positive and negative reward prediction errors</h2>
+<p>Find this part of the visual-to-MSN weight update:</p>
+<pre class="python"><code>if rpe[trl] &gt; 0:
+    dw_1A = alpha_w * pre * post_ltp_1[0] * post_ltp_2[0] * (
+        1 - w_vis_msn[:, 0]
+    ) * rpe[trl]
+    dw_1B = alpha_w * pre * post_ltp_1[1] * post_ltp_2[1] * (
+        1 - w_vis_msn[:, 1]
+    ) * rpe[trl]
+else:
+    dw_1A = beta_w * pre * post_ltp_1[0] * post_ltp_2[0] * (
+        w_vis_msn[:, 0]
+    ) * rpe[trl]
+    dw_1B = beta_w * pre * post_ltp_1[1] * post_ltp_2[1] * (
+        w_vis_msn[:, 1]
+    ) * rpe[trl]</code></pre>
+<p>Questions:</p>
+<ol style="list-style-type: decimal">
+<li>When <code>rpe[trl] &gt; 0</code>, does the active visual-to-MSN
+pathway strengthen or weaken?</li>
+<li>When <code>rpe[trl] &lt; 0</code>, does the active visual-to-MSN
+pathway strengthen or weaken?</li>
+<li>Why does multiplying by <code>rpe[trl]</code> make the sign of the
+prediction error matter?</li>
+<li>In the positive-RPE branch, what role does
+<code>(1 - w_vis_msn[:, 0])</code> or <code>(1 - w_vis_msn[:, 1])</code>
+play?</li>
+<li>In the negative-RPE branch, what role does
+<code>w_vis_msn[:, 0]</code> or <code>w_vis_msn[:, 1]</code> play?</li>
+<li>Why should a correct, unexpectedly rewarded response make the same
+response more likely for similar future stimuli?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li>When <code>rpe[trl] &gt; 0</code>, the active visual-to-MSN pathway
+strengthens.</li>
+<li>When <code>rpe[trl] &lt; 0</code>, the active visual-to-MSN pathway
+weakens.</li>
+<li>Multiplying by <code>rpe[trl]</code> makes the sign of the error
+control the sign of the weight change.</li>
+<li>In the positive branch, <code>(1 - w_vis_msn)</code> slows
+strengthening as the weight approaches its upper bound.</li>
+<li>In the negative-RPE branch, <code>w_vis_msn</code> slows weakening
+as the weight approaches its lower bound.</li>
+<li>A correct, unexpectedly rewarded response should become more likely
+for similar future stimuli because the active visual units gain stronger
+influence over the MSN pathway that supported the successful
+response.</li>
+</ol>
+</details>
+</div>
+<div id="part-9-simplifications-in-the-teaching-model" class="section level2">
+<h2>Part 9: Simplifications in the teaching model</h2>
+<p>The lecture rule includes postsynaptic thresholds, exponential
+scaling, and weak-postsynaptic LTD terms. The category-learning model
+simplifies some of these details:</p>
+<pre class="python"><code>post_ltp_2 = (1, 1)
+post_ltd_2 = (1, 1)</code></pre>
+<p>and:</p>
+<pre class="python"><code>dw_2A = 0
+dw_2B = 0</code></pre>
+<p>These simplifications keep the core Week 10 logic:</p>
 <ul>
-<li><code>../lectures/week_10/demo_rl.py</code>;</li>
-<li><code>../code/model_cat_learn.py</code>;</li>
-<li>the visual-to-MSN, cortico-striatal pathway in SPEED.</li>
+<li>active visual units provide the presynaptic factor;</li>
+<li>active MSNs provide the postsynaptic factor;</li>
+<li>reward prediction error provides the reinforcement factor;</li>
+<li>positive prediction errors strengthen the active response
+pathway;</li>
+<li>negative prediction errors weaken the active response pathway.</li>
 </ul>
-<p>The key Week 10 question will be: how does dopamine-like reward
-prediction error decide whether active cortico-striatal weights should
-increase or decrease?</p>
+<p>Questions:</p>
+<ol style="list-style-type: decimal">
+<li>Which parts of the full lecture learning rule are simplified
+here?</li>
+<li>What core three-factor logic is preserved?</li>
+<li>Why might simplification be reasonable in a teaching model?</li>
+<li>For a final project, what should you document if you simplify a
+learning rule from a paper?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li>The compact model simplifies the exponential postsynaptic scaling
+terms and omits the weak-postsynaptic LTD term by setting
+<code>dw_2A</code> and <code>dw_2B</code> to zero.</li>
+<li>It preserves the main three-factor logic because pre, post, and
+reward prediction error still jointly determine weight change.</li>
+<li>Simplification can be reasonable in a teaching model when it keeps
+the main mechanism visible and avoids numerical complications.</li>
+<li>In a final project, document what you changed, why you changed it,
+and how the change might affect the model’s behaviour.</li>
+</ol>
+</details>
 </div>
-<div id="during-the-tutorial" class="section level2">
-<h2>During the tutorial</h2>
-<p>Work on the problem sets and final-project code after you have worked
-through the mapping above. Ask for help especially if you cannot
-identify the presynaptic term, postsynaptic term, or weight update in
-your assigned final-project model.</p>
+<div id="part-10-compare-week-9-and-week-10-learning-in-speed" class="section level2">
+<h2>Part 10: Compare Week 9 and Week 10 learning in SPEED</h2>
+<p>If you are using SPEED for your final project, open
+<code>../lectures/week_12/model_speed_brute.py</code>.</p>
+<p>Find:</p>
+<pre class="python"><code># Update visual-msn weights via 3-factor RL rule</code></pre>
+<p>and:</p>
+<pre class="python"><code># Update visual-pm weights via 2-factor Hebbian rule</code></pre>
+<p>Questions:</p>
+<ol style="list-style-type: decimal">
+<li>Which pathway uses reinforcement learning?</li>
+<li>Which pathway uses two-factor Hebbian learning?</li>
+<li>What is the third factor in the visual-to-MSN rule?</li>
+<li>Why does the cortical-cortical visual-to-premotor rule not need
+reward prediction error?</li>
+<li>How does this division of labour help SPEED combine procedural
+learning with cortical representations?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li>The visual-to-MSN pathway uses reinforcement learning.</li>
+<li>The visual-to-premotor pathway uses a two-factor Hebbian rule.</li>
+<li>The third factor in the visual-to-MSN rule is reward prediction
+error.</li>
+<li>The cortical-cortical rule does not use reward prediction error
+because it is modelling activity-dependent cortical association rather
+than feedback-driven action learning.</li>
+<li>This lets SPEED combine a procedural basal-ganglia learning system
+with cortical pathways that can represent and express learned
+stimulus-response structure.</li>
+</ol>
+</details>
+</div>
+<div id="final-project-bridge" class="section level2">
+<h2>Final-project bridge</h2>
+<p>Before moving on to problem sets or final-project coding, write short
+answers to these prompts:</p>
+<ol style="list-style-type: decimal">
+<li>In the model you are working with, what are the presynaptic
+units?</li>
+<li>What are the postsynaptic units?</li>
+<li>What counts as reward or feedback?</li>
+<li>Is there an explicit reward prediction error?</li>
+<li>Which weights change over trials?</li>
+<li>What condition causes those weights to strengthen?</li>
+<li>What condition causes those weights to weaken?</li>
+<li>Which details are biologically motivated, and which are teaching or
+implementation simplifications?</li>
+</ol>
+<details>
+<summary>
+Answers
+</summary>
+<ol style="list-style-type: decimal">
+<li>In the compact category-learning model, the presynaptic units are
+visual units.</li>
+<li>The postsynaptic units are MSNs.</li>
+<li>Feedback is coded as <code>r</code>.</li>
+<li>Reward prediction error is coded as <code>rpe</code>.</li>
+<li>The visual-to-MSN weights change over trials.</li>
+<li>They strengthen when the relevant pathway is active and the outcome
+is better than expected.</li>
+<li>They weaken when the relevant pathway is active and the outcome is
+worse than expected.</li>
+<li>Any shortcut, such as turning an exponential scaling term into
+<code>1</code>, should be described as an implementation or teaching
+simplification rather than as a new biological claim.</li>
+</ol>
+</details>
+<p>During the rest of the tutorial, work on the problem sets and final
+project. Ask for help especially if you cannot locate the reward,
+prediction, prediction-error, or weight-update variables in your
+model.</p>
 </div>
 
 

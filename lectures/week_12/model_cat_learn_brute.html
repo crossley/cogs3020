@@ -827,8 +827,8 @@ for trl in range(n_trl - 1):
                 dw_B = alpha_w * pre * post_ltp_1_B * post_ltp_2_B * (1 - w_vis_msn_B[ii, jj]) * rpe[trl]
             else:
                 # LTD caused by strong post-synaptic activity and negative reward prediction error
-                dw_A = beta_w * pre * post_ltp_1_A * post_ltp_2_A * (1 - w_vis_msn_A[ii, jj]) * rpe[trl]
-                dw_B = beta_w * pre * post_ltp_1_B * post_ltp_2_B * (1 - w_vis_msn_B[ii, jj]) * rpe[trl]
+                dw_A = beta_w * pre * post_ltp_1_A * post_ltp_2_A * w_vis_msn_A[ii, jj] * rpe[trl]
+                dw_B = beta_w * pre * post_ltp_1_B * post_ltp_2_B * w_vis_msn_B[ii, jj] * rpe[trl]
 
             # NOTE: LTD is also caused by weak post-synaptic activity, but for simplicity I have not
             # included that here. Again, you should strive to replicate what is done in the paper you

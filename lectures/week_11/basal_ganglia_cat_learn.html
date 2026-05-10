@@ -547,8 +547,8 @@ for trl in range(n_trl - 1):
         dw_1B = alpha_w * pre * post_ltp_1[1] * post_ltp_2[1] * (1 - w_vis_msn[:, 1]) * rpe[trl]
     else:
         # LTD caused by strong post-synaptic activity and negative reward prediction error
-        dw_1A = beta_w * pre * post_ltp_1[0] * post_ltp_2[0] * (1 - w_vis_msn[:, 0]) * rpe[trl]
-        dw_1B = beta_w * pre * post_ltp_1[1] * post_ltp_2[1] * (1 - w_vis_msn[:, 1]) * rpe[trl]
+        dw_1A = beta_w * pre * post_ltp_1[0] * post_ltp_2[0] * w_vis_msn[:, 0] * rpe[trl]
+        dw_1B = beta_w * pre * post_ltp_1[1] * post_ltp_2[1] * w_vis_msn[:, 1] * rpe[trl]
 
     # TODO: HACK TURN OFF FOR SIMPLICITY FOR NOW
     # LTD also caused by weak post-synaptic activity

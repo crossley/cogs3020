@@ -134,6 +134,8 @@ Core lessons:
 
 - <a href="tutorials/tutorial_9.html" target="_blank">Tutorial 9: Hebbian learning and SPEED cortical-cortical projections</a>
 
+- <a href="tutorials/tutorial_10.html" target="_blank">Tutorial 10: Reinforcement learning and visual-to-MSN projections</a>
+
 - <a href="https://github.com/crossley/crossleylab/tree/main/code/basal_ganglia_spiking_network_cat_learn" target="_blank">Basal ganglia spiking network with category learning</a>
 
 This repository introduces learning rules that modify

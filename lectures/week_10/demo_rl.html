@@ -505,7 +505,7 @@ for trl in range(N-1): # iterate over trials
         delta_w += alpha * pre * post_ltp_1 * post_ltp_2 * (1 - w[trl]) * delta[trl]
     else:
         # LTD caused by strong post-synaptic activity and negative reward prediction error
-        delta_w -= alpha * pre * post_ltp_1 * post_ltp_2 * (1 - w[trl]) * np.abs(delta[trl])
+        delta_w -= alpha * pre * post_ltp_1 * post_ltp_2 * w[trl] * np.abs(delta[trl])
 
     # LTD also caused by weak post-synaptic activity
     delta_w -= beta * pre * post_ltd_1 * post_ltd_2 * w[trl]
