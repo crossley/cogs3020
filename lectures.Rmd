@@ -90,9 +90,7 @@ fontsize: 14pt
 
 - Week 12
   - <a href="lectures/week_12/model_cat_learn_brute.html" target="_blank">Category Learning in the Basal Ganglia: Brute method</a>
-  - <a href="lectures/week_12/model_covis_brute.html" target="_blank">Multiple Systems in Category Learning</a>
   - <a href="lectures/week_12/model_speed_brute.html" target="_blank">Combining Hebbian Learning in Cortex with Reinforcement Learning in the Striatum</a>
-  - <a href="lectures/week_12/model_tan_brute.html" target="_blank">Large Aspiny Cholinergic Interneurons of the Striatum (TANs)</a>
 
 - Week 13
   - Helpful clues based on tutorial and ilearn questions for your final project
